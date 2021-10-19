@@ -1,0 +1,168 @@
+enum class Alignment {
+    LEFT,
+    RIGHT,
+    CENTER,
+    JUSTIFY
+}
+
+fun alignText(
+    text: String,
+    lineWidth: Int = 120,
+    alignment: Alignment = Alignment.LEFT
+): String {
+    val newText : MutableList<String> = arrayListOf()   // Список, элемантами которого
+    // яляются строки результирующего текста
+    newText.add("")
+
+    val oneStringText = text.replace('\n', ' ') // Перевод многострочного текста в однострочный
+
+    for (word in oneStringText.split(' ')){
+        var tempWord : String = word
+
+        when{
+            word.length > lineWidth -> {
+                // Если слово длиннее ширины строки - попробуем впихнуть
+                // его в текущую строку с послед. переносом
+                do {
+                    val tempIt = lineWidth - newText.last().length
+                    newText[newText.size - 1] += tempWord.substring(0, tempIt)
+                    newText.add("")
+                    tempWord = tempWord.substring(tempIt)
+                } while (tempWord.length > lineWidth)
+                newText[newText.size - 1] += tempWord
+                // Пробел
+                if (newText[newText.size - 1].length < lineWidth)
+                    newText[newText.size - 1] += " "
+                else
+                    newText.add("")
+                continue
+            }
+            word.length > lineWidth - newText.last().length -> {
+                // Если слово короче ширины строки, но оно
+                // не помещается - переносим на след. строку
+                newText.add(tempWord)
+                // Пробел
+                if (newText[newText.size - 1].length < lineWidth)
+                    newText[newText.size - 1] += " "
+                else
+                    newText.add("")
+                continue
+            }
+            else -> {
+                // Здесь, вроде, слово должно хорошо влезть в текущую строку
+                newText[newText.size - 1] += tempWord
+                // Пробел
+                if (newText[newText.size - 1].length < lineWidth)
+                    newText[newText.size - 1] += " "
+                else
+                    newText.add("")
+                continue
+            }
+        }
+    }
+    return when (alignment){
+        Alignment.LEFT -> AlignmentLeft(newText, lineWidth)
+        Alignment.RIGHT -> AlignmentRight(newText, lineWidth)
+        Alignment.CENTER -> AlignmentCenter(newText, lineWidth)
+        Alignment.JUSTIFY -> AlignmentJystify(newText, lineWidth)
+    }
+}
+
+private fun AlignmentLeft (newText : MutableList<String>, lineWidth : Int) : String {
+    // Накидываем пробелы справа от строки до заданной ширины
+    for (iString in 0 until newText.size){
+        while (newText[iString].length < lineWidth){
+            newText[iString] = newText[iString] + " "
+        }
+    }
+    return newText.joinToString(separator = "\n")
+}
+
+private fun AlignmentRight (newText : MutableList<String>, lineWidth : Int) : String{
+    for (iString in 0 until newText.size){
+        // Перекидываем пробелы справа от строки налево
+        while (newText[iString][newText[iString].length - 1] == ' '){
+            newText[iString] = " " + newText[iString].substring(0, newText[iString].length - 1)
+        }
+        // Накидываем пробелы слева от строки до заданной ширины
+        while (newText[iString].length < lineWidth){
+            newText[iString] = " " + newText[iString]
+        }
+    }
+    return newText.joinToString(separator = "\n")
+}
+
+private fun AlignmentCenter (newText : MutableList<String>, lineWidth : Int) : String{
+    for (iString in 0 until newText.size){
+        // Удаляем все пробелы слева и справа от строки
+        while (newText[iString][newText[iString].length - 1] == ' '){
+            newText[iString] = newText[iString].substring(0, newText[iString].length - 1)
+        }
+        while (newText[iString][0] == ' '){
+            newText[iString] = newText[iString].substring(1)
+        }
+
+        // Равномерно накидываем пробелы справа и слева от строки до заданной ширины
+        while (newText[iString].length < lineWidth){
+            if (newText[iString].length < lineWidth)
+                newText[iString] = " " + newText[iString]
+            if (newText[iString].length < lineWidth)
+                newText[iString] = newText[iString] + " "
+        }
+    }
+    return newText.joinToString(separator = "\n")
+}
+
+private fun AlignmentJystify (newText : MutableList<String>, lineWidth : Int) : String{
+    for (iString in 0 until newText.size){
+
+        // Удаляем все пробелы слева и справа от строки
+        while (newText[iString][newText[iString].length - 1] == ' '){
+            newText[iString] = newText[iString].substring(0, newText[iString].length - 1)
+        }
+        while (newText[iString][0] == ' '){
+            newText[iString] = newText[iString].substring(1)
+        }
+
+        // Кол-во строк в строке
+        val countOfWords = newText[iString].split(' ').count()
+
+        var tempString = ""
+
+        // Костыль, если слово в строке только одно - выравниваем его по левому краю
+        if (countOfWords == 1) {
+            tempString = newText[iString].split(' ')[0]
+            newText[iString] = tempString
+            continue
+        }
+
+        // Кол-во мест, куда требуется накидать пробелов
+        var countOfSpaces = lineWidth
+
+        for (word in newText[iString].split(' '))
+            countOfSpaces -= word.length
+
+        // Размер пробела между строками
+        val sizeOfSpace = countOfSpaces / (countOfWords - 1)
+        // Кол-во больших пробелов (равен sizeOfSpace + 1)
+        var countOfBigSpaces = countOfSpaces % (countOfWords - 1)
+
+        // Запихиваем все слова строки в tempString с нужным кол-вом пробелов между ними
+        for (word in newText[iString].split(' ').subList(0, countOfWords - 1))
+            if (countOfBigSpaces > 0) {
+                tempString += word
+                repeat(sizeOfSpace + 1) {
+                    tempString += " "
+                    countOfBigSpaces--
+                }
+            }
+            else {
+                tempString += word
+                repeat(sizeOfSpace) {
+                    tempString += " "
+                }
+            }
+        newText[iString] = tempString + newText[iString].split(' ')[countOfWords - 1]
+    }
+    return newText.joinToString(separator = "\n")
+}
