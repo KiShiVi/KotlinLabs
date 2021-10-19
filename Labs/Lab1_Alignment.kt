@@ -10,19 +10,16 @@ fun alignText(
     lineWidth: Int = 120,
     alignment: Alignment = Alignment.LEFT
 ): String {
-    val newText : MutableList<String> = arrayListOf()   // Список, элемантами которого
-    // яляются строки результирующего текста
+    val newText : MutableList<String> = arrayListOf()
     newText.add("")
 
-    val oneStringText = text.replace('\n', ' ') // Перевод многострочного текста в однострочный
+    val oneStringText = text.replace('\n', ' ')
 
     for (word in oneStringText.split(' ')){
         var tempWord : String = word
 
         when{
             word.length > lineWidth -> {
-                // Если слово длиннее ширины строки - попробуем впихнуть
-                // его в текущую строку с послед. переносом
                 do {
                     val tempIt = lineWidth - newText.last().length
                     newText[newText.size - 1] += tempWord.substring(0, tempIt)
@@ -30,45 +27,29 @@ fun alignText(
                     tempWord = tempWord.substring(tempIt)
                 } while (tempWord.length > lineWidth)
                 newText[newText.size - 1] += tempWord
-                // Пробел
-                if (newText[newText.size - 1].length < lineWidth)
-                    newText[newText.size - 1] += " "
-                else
-                    newText.add("")
-                continue
+                spaceAtTheEndOfAWord(newText, lineWidth)
             }
             word.length > lineWidth - newText.last().length -> {
-                // Если слово короче ширины строки, но оно
-                // не помещается - переносим на след. строку
                 newText.add(tempWord)
-                // Пробел
-                if (newText[newText.size - 1].length < lineWidth)
-                    newText[newText.size - 1] += " "
-                else
-                    newText.add("")
-                continue
+                spaceAtTheEndOfAWord(newText, lineWidth)
             }
             else -> {
-                // Здесь, вроде, слово должно хорошо влезть в текущую строку
                 newText[newText.size - 1] += tempWord
-                // Пробел
-                if (newText[newText.size - 1].length < lineWidth)
-                    newText[newText.size - 1] += " "
-                else
-                    newText.add("")
-                continue
+                spaceAtTheEndOfAWord(newText, lineWidth)
             }
         }
     }
     return when (alignment){
-        Alignment.LEFT -> AlignmentLeft(newText, lineWidth)
-        Alignment.RIGHT -> AlignmentRight(newText, lineWidth)
-        Alignment.CENTER -> AlignmentCenter(newText, lineWidth)
-        Alignment.JUSTIFY -> AlignmentJystify(newText, lineWidth)
+        Alignment.LEFT      -> alignmentLeft(newText, lineWidth)
+        Alignment.RIGHT     -> alignmentRight(newText, lineWidth)
+        Alignment.CENTER    -> alignmentCenter(newText, lineWidth)
+        Alignment.JUSTIFY   -> alignmentJustify(newText, lineWidth)
     }
 }
 
-private fun AlignmentLeft (newText : MutableList<String>, lineWidth : Int) : String {
+
+
+private fun alignmentLeft (newText : MutableList<String>, lineWidth : Int) : String {
     // Накидываем пробелы справа от строки до заданной ширины
     for (iString in 0 until newText.size){
         while (newText[iString].length < lineWidth){
@@ -78,7 +59,9 @@ private fun AlignmentLeft (newText : MutableList<String>, lineWidth : Int) : Str
     return newText.joinToString(separator = "\n")
 }
 
-private fun AlignmentRight (newText : MutableList<String>, lineWidth : Int) : String{
+
+
+private fun alignmentRight (newText : MutableList<String>, lineWidth : Int) : String{
     for (iString in 0 until newText.size){
         // Перекидываем пробелы справа от строки налево
         while (newText[iString][newText[iString].length - 1] == ' '){
@@ -92,15 +75,11 @@ private fun AlignmentRight (newText : MutableList<String>, lineWidth : Int) : St
     return newText.joinToString(separator = "\n")
 }
 
-private fun AlignmentCenter (newText : MutableList<String>, lineWidth : Int) : String{
+
+
+private fun alignmentCenter (newText : MutableList<String>, lineWidth : Int) : String{
     for (iString in 0 until newText.size){
-        // Удаляем все пробелы слева и справа от строки
-        while (newText[iString][newText[iString].length - 1] == ' '){
-            newText[iString] = newText[iString].substring(0, newText[iString].length - 1)
-        }
-        while (newText[iString][0] == ' '){
-            newText[iString] = newText[iString].substring(1)
-        }
+        deleteLeftAndRightSpaces(newText, iString)
 
         // Равномерно накидываем пробелы справа и слева от строки до заданной ширины
         while (newText[iString].length < lineWidth){
@@ -113,20 +92,14 @@ private fun AlignmentCenter (newText : MutableList<String>, lineWidth : Int) : S
     return newText.joinToString(separator = "\n")
 }
 
-private fun AlignmentJystify (newText : MutableList<String>, lineWidth : Int) : String{
+
+
+private fun alignmentJustify (newText : MutableList<String>, lineWidth : Int) : String{
     for (iString in 0 until newText.size){
 
-        // Удаляем все пробелы слева и справа от строки
-        while (newText[iString][newText[iString].length - 1] == ' '){
-            newText[iString] = newText[iString].substring(0, newText[iString].length - 1)
-        }
-        while (newText[iString][0] == ' '){
-            newText[iString] = newText[iString].substring(1)
-        }
+        deleteLeftAndRightSpaces(newText, iString)
 
-        // Кол-во строк в строке
         val countOfWords = newText[iString].split(' ').count()
-
         var tempString = ""
 
         // Костыль, если слово в строке только одно - выравниваем его по левому краю
@@ -165,4 +138,45 @@ private fun AlignmentJystify (newText : MutableList<String>, lineWidth : Int) : 
         newText[iString] = tempString + newText[iString].split(' ')[countOfWords - 1]
     }
     return newText.joinToString(separator = "\n")
+}
+
+private fun spaceAtTheEndOfAWord (newText: MutableList<String>, lineWidth : Int){
+    if (newText[newText.size - 1].length < lineWidth)
+        newText[newText.size - 1] += " "
+    else
+        newText.add("")
+}
+
+private fun deleteLeftAndRightSpaces(newText: MutableList<String>, iString: Int){
+    while (newText[iString][newText[iString].length - 1] == ' '){
+        newText[iString] = newText[iString].substring(0, newText[iString].length - 1)
+    }
+    while (newText[iString][0] == ' '){
+        newText[iString] = newText[iString].substring(1)
+    }
+}
+
+fun main(){
+    val text : String = """Впервые более чем за 250 млн лет ящерицы смогли 
+        |восстановить идеальный хвост. Это получилось при помощи ученых из Университета 
+        |Южной Калифорнии. Исследователи сравнили, как хвосты ящериц растут во время 
+        |эмбрионального периода и во взрослом возрасте — после того как первый хвост 
+        |отпал. В обоих случаях ключевую роль играют нервные стволовые клетки, но ведут они себя по-разному.
+        |У взрослых ящериц эти клетки вырабатывают молекулярный сигнал, блокирующий 
+        |формирование скелета и нервов, но стимулирующий рост хряща. В итоге получается 
+        |не хвост, а просто хрящевая трубка.
+        |Ученые попробовали пересаживать эмбриональные клетки взрослым особям, 
+        |но это не помогло. Тогда они применили генетическое редактирование и 
+        |сделали эмбриональные клетки устойчивыми к молекулярному сигналу. После этого 
+        |ящерицы смогли восстановить нормальный хвост уже во взрослом возрасте.
+        |Теперь исследователи хотят усовершенствовать свой метод и использовать его для 
+        |заживления глубоких и трудных ран.""".trimMargin()
+
+    println(alignText(text = text, lineWidth = 100, alignment = Alignment.LEFT))
+    println("=================================================================")
+    println(alignText(text = text, lineWidth = 100, alignment = Alignment.RIGHT))
+    println("=================================================================")
+    println(alignText(text = text, lineWidth = 100, alignment = Alignment.CENTER))
+    println("=================================================================")
+    println(alignText(text = text, lineWidth = 100, alignment = Alignment.JUSTIFY))
 }
