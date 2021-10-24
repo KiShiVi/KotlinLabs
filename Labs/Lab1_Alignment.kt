@@ -10,6 +10,9 @@ fun alignText(
     lineWidth: Int = 120,
     alignment: Alignment = Alignment.LEFT
 ): String {
+    if (lineWidth <= 0)
+        throw Exception("lineWidth less than or equal to 0")
+
     val newText: MutableList<String> = arrayListOf()
     newText.add("")
 
@@ -62,7 +65,7 @@ private fun alignmentLeft(newText: MutableList<String>, lineWidth: Int): String 
 private fun alignmentRight(newText: MutableList<String>, lineWidth: Int): String {
     for (iString in 0 until newText.size) {
         // Throwing spaces to the right of the line to the left
-        while (newText[iString][newText[iString].length - 1] == ' ') {
+        while (newText[iString].length > 1 && newText[iString][newText[iString].length - 1] == ' ') {
             newText[iString] = " " + newText[iString].substring(0, newText[iString].length - 1)
         }
         // Insert spaces to the left of the line to the specified width
@@ -143,10 +146,10 @@ private fun spaceAtTheEndOfAWord(newText: MutableList<String>, lineWidth: Int) {
 }
 
 private fun deleteLeftAndRightSpaces(newText: MutableList<String>, iString: Int) {
-    while (newText[iString][newText[iString].length - 1] == ' ') {
+    while (newText[iString].length > 1 && newText[iString][newText[iString].length - 1] == ' ') {
         newText[iString] = newText[iString].substring(0, newText[iString].length - 1)
     }
-    while (newText[iString][0] == ' ') {
+    while (newText[iString].length > 1 && newText[iString][0] == ' ') {
         newText[iString] = newText[iString].substring(1)
     }
 }
