@@ -10,15 +10,15 @@ fun alignText(
     lineWidth: Int = 120,
     alignment: Alignment = Alignment.LEFT
 ): String {
-    val newText : MutableList<String> = arrayListOf()
+    val newText: MutableList<String> = arrayListOf()
     newText.add("")
 
     val oneStringText = text.replace('\n', ' ')
 
-    for (word in oneStringText.split(' ')){
-        var tempWord : String = word
+    for (word in oneStringText.split(' ')) {
+        var tempWord: String = word
 
-        when{
+        when {
             word.length > lineWidth -> {
                 do {
                     val tempIt = lineWidth - newText.last().length
@@ -39,20 +39,19 @@ fun alignText(
             }
         }
     }
-    return when (alignment){
-        Alignment.LEFT      -> alignmentLeft(newText, lineWidth)
-        Alignment.RIGHT     -> alignmentRight(newText, lineWidth)
-        Alignment.CENTER    -> alignmentCenter(newText, lineWidth)
-        Alignment.JUSTIFY   -> alignmentJustify(newText, lineWidth)
+    return when (alignment) {
+        Alignment.LEFT -> alignmentLeft(newText, lineWidth)
+        Alignment.RIGHT -> alignmentRight(newText, lineWidth)
+        Alignment.CENTER -> alignmentCenter(newText, lineWidth)
+        Alignment.JUSTIFY -> alignmentJustify(newText, lineWidth)
     }
 }
 
 
-
-private fun alignmentLeft (newText : MutableList<String>, lineWidth : Int) : String {
+private fun alignmentLeft(newText: MutableList<String>, lineWidth: Int): String {
     // Накидываем пробелы справа от строки до заданной ширины
-    for (iString in 0 until newText.size){
-        while (newText[iString].length < lineWidth){
+    for (iString in 0 until newText.size) {
+        while (newText[iString].length < lineWidth) {
             newText[iString] = newText[iString] + " "
         }
     }
@@ -60,15 +59,14 @@ private fun alignmentLeft (newText : MutableList<String>, lineWidth : Int) : Str
 }
 
 
-
-private fun alignmentRight (newText : MutableList<String>, lineWidth : Int) : String{
-    for (iString in 0 until newText.size){
+private fun alignmentRight(newText: MutableList<String>, lineWidth: Int): String {
+    for (iString in 0 until newText.size) {
         // Перекидываем пробелы справа от строки налево
-        while (newText[iString][newText[iString].length - 1] == ' '){
+        while (newText[iString][newText[iString].length - 1] == ' ') {
             newText[iString] = " " + newText[iString].substring(0, newText[iString].length - 1)
         }
         // Накидываем пробелы слева от строки до заданной ширины
-        while (newText[iString].length < lineWidth){
+        while (newText[iString].length < lineWidth) {
             newText[iString] = " " + newText[iString]
         }
     }
@@ -76,13 +74,12 @@ private fun alignmentRight (newText : MutableList<String>, lineWidth : Int) : St
 }
 
 
-
-private fun alignmentCenter (newText : MutableList<String>, lineWidth : Int) : String{
-    for (iString in 0 until newText.size){
+private fun alignmentCenter(newText: MutableList<String>, lineWidth: Int): String {
+    for (iString in 0 until newText.size) {
         deleteLeftAndRightSpaces(newText, iString)
 
         // Равномерно накидываем пробелы справа и слева от строки до заданной ширины
-        while (newText[iString].length < lineWidth){
+        while (newText[iString].length < lineWidth) {
             if (newText[iString].length < lineWidth)
                 newText[iString] = " " + newText[iString]
             if (newText[iString].length < lineWidth)
@@ -93,9 +90,8 @@ private fun alignmentCenter (newText : MutableList<String>, lineWidth : Int) : S
 }
 
 
-
-private fun alignmentJustify (newText : MutableList<String>, lineWidth : Int) : String{
-    for (iString in 0 until newText.size){
+private fun alignmentJustify(newText: MutableList<String>, lineWidth: Int): String {
+    for (iString in 0 until newText.size) {
 
         deleteLeftAndRightSpaces(newText, iString)
 
@@ -128,8 +124,7 @@ private fun alignmentJustify (newText : MutableList<String>, lineWidth : Int) : 
                     tempString += " "
                     countOfBigSpaces--
                 }
-            }
-            else {
+            } else {
                 tempString += word
                 repeat(sizeOfSpace) {
                     tempString += " "
@@ -140,18 +135,18 @@ private fun alignmentJustify (newText : MutableList<String>, lineWidth : Int) : 
     return newText.joinToString(separator = "\n")
 }
 
-private fun spaceAtTheEndOfAWord (newText: MutableList<String>, lineWidth : Int){
+private fun spaceAtTheEndOfAWord(newText: MutableList<String>, lineWidth: Int) {
     if (newText[newText.size - 1].length < lineWidth)
         newText[newText.size - 1] += " "
     else
         newText.add("")
 }
 
-private fun deleteLeftAndRightSpaces(newText: MutableList<String>, iString: Int){
-    while (newText[iString][newText[iString].length - 1] == ' '){
+private fun deleteLeftAndRightSpaces(newText: MutableList<String>, iString: Int) {
+    while (newText[iString][newText[iString].length - 1] == ' ') {
         newText[iString] = newText[iString].substring(0, newText[iString].length - 1)
     }
-    while (newText[iString][0] == ' '){
+    while (newText[iString][0] == ' ') {
         newText[iString] = newText[iString].substring(1)
     }
 }
