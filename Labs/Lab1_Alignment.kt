@@ -49,7 +49,7 @@ fun alignText(
 
 
 private fun alignmentLeft(newText: MutableList<String>, lineWidth: Int): String {
-    // Накидываем пробелы справа от строки до заданной ширины
+    // Insert spaces to the right of the line to the specified width
     for (iString in 0 until newText.size) {
         while (newText[iString].length < lineWidth) {
             newText[iString] = newText[iString] + " "
@@ -61,11 +61,11 @@ private fun alignmentLeft(newText: MutableList<String>, lineWidth: Int): String 
 
 private fun alignmentRight(newText: MutableList<String>, lineWidth: Int): String {
     for (iString in 0 until newText.size) {
-        // Перекидываем пробелы справа от строки налево
+        // Throwing spaces to the right of the line to the left
         while (newText[iString][newText[iString].length - 1] == ' ') {
             newText[iString] = " " + newText[iString].substring(0, newText[iString].length - 1)
         }
-        // Накидываем пробелы слева от строки до заданной ширины
+        // Insert spaces to the left of the line to the specified width
         while (newText[iString].length < lineWidth) {
             newText[iString] = " " + newText[iString]
         }
@@ -78,7 +78,7 @@ private fun alignmentCenter(newText: MutableList<String>, lineWidth: Int): Strin
     for (iString in 0 until newText.size) {
         deleteLeftAndRightSpaces(newText, iString)
 
-        // Равномерно накидываем пробелы справа и слева от строки до заданной ширины
+        // Add spaces evenly to the right and left of the line to the specified width
         while (newText[iString].length < lineWidth) {
             if (newText[iString].length < lineWidth)
                 newText[iString] = " " + newText[iString]
@@ -98,25 +98,25 @@ private fun alignmentJustify(newText: MutableList<String>, lineWidth: Int): Stri
         val countOfWords = newText[iString].split(' ').count()
         var tempString = ""
 
-        // Костыль, если слово в строке только одно - выравниваем его по левому краю
+        // Crutch, if there is only one word in a line - align it to the left
         if (countOfWords == 1) {
             tempString = newText[iString].split(' ')[0]
             newText[iString] = tempString
             continue
         }
 
-        // Кол-во мест, куда требуется накидать пробелов
+        // Number of places where you want to add spaces
         var countOfSpaces = lineWidth
 
         for (word in newText[iString].split(' '))
             countOfSpaces -= word.length
 
-        // Размер пробела между строками
+        // Space between lines
         val sizeOfSpace = countOfSpaces / (countOfWords - 1)
-        // Кол-во больших пробелов (равен sizeOfSpace + 1)
+        // Number of large spaces (equal to sizeOfSpace + 1)
         var countOfBigSpaces = countOfSpaces % (countOfWords - 1)
 
-        // Запихиваем все слова строки в tempString с нужным кол-вом пробелов между ними
+        // We push all the words of the string into tempString with the required number of spaces between them
         for (word in newText[iString].split(' ').subList(0, countOfWords - 1))
             if (countOfBigSpaces > 0) {
                 tempString += word
