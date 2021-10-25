@@ -33,7 +33,7 @@ private val tokens: List<Token> = listOf(
 private class Token constructor(val singleToken: String, val priority: Int, val type: OperatorType)
 
 fun calculate(infixPhrase: String): Double {
-    val polishList: MutableList<Token> = toPolishPhrase(infixPhrase)
+    val polishList: List<Token> = toPolishPhrase(infixPhrase)
     val localStack: Stack<Double> = Stack()
 
     for (i in polishList) {
@@ -66,7 +66,7 @@ fun calculate(infixPhrase: String): Double {
     return localStack.pop()
 }
 
-private fun toPolishPhrase(infixPhrase: String): MutableList<Token> {
+private fun toPolishPhrase(infixPhrase: String): List<Token> {
 
     var localInfixPhrase = infixPhrase.replace(" ", "")
     var prevToken: Token
