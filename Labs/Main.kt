@@ -32,7 +32,7 @@ fun main() {
 
     val shapeFactory = ShapeFactorImpl()
     val shapeUtil = ShapeUtil()
-    val shapeList : MutableList<Shape> = arrayListOf()
+    val shapeList: MutableList<Shape> = arrayListOf()
     shapeList.add(shapeFactory.createCircle(5.0))
     shapeList.add(shapeFactory.createRandomCircle())
 
