@@ -117,7 +117,7 @@ class ShapeFactorImpl : ShapeFactory {
         var a = randomDouble()
         var b = randomDouble()
         var c = randomDouble()
-        while (a + b <= c || a + c <= b || b + c <= a){
+        while (a + b <= c || a + c <= b || b + c <= a) {
             a = randomDouble()
             b = randomDouble()
             c = randomDouble()
