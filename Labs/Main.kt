@@ -54,31 +54,35 @@ fun main() {
 //    println(shapeUtil.searchMaxPerimeterShape(shapeList).javaClass.typeName)
 //    println(shapeUtil.searchMinPerimeterShape(shapeList).javaClass.typeName)
 
-    val table = Array(2) { Array(3) { 0 } }
-    table[0] = arrayOf(1, 2, 3)     // первая строка таблицы
-    table[1] = arrayOf(4, 5, 6)     // вторая строка таблицы
-    var A: MutableMatrix = MutableMatrix(table)
+    val table = Array(2) { Array(3) { 0.0 } }
+    table[0] = arrayOf(1.0, 2.0, 3.0)
+    table[1] = arrayOf(4.0, 5.0, 6.0)
+    val a = MutableMatrix(table)
 
-    val table2 = Array(3) { Array(2) { 0 } }
-    table2[0] = arrayOf(1, 2)     // первая строка таблицы
-    table2[1] = arrayOf(3, 4)     // вторая строка таблицы
-    table2[2] = arrayOf(5, 6)
-    var B: Matrix = Matrix(table2)
+    val table2 = Array(3) { Array(2) { 0.0 } }
+    table2[0] = arrayOf(1.0, 2.0)
+    table2[1] = arrayOf(3.0, 4.0)
+    table2[2] = arrayOf(5.0, 6.0)
+    val b = Matrix(table2)
 
-    val table3 = Array(2) { Array(3) { 0 } }
-    table3[0] = arrayOf(1, 2, 3)     // первая строка таблицы
-    table3[1] = arrayOf(4, 5, 6)     // вторая строка таблицы
-    var C: Matrix = Matrix(table3)
+    val table3 = Array(2) { Array(3) { 0.0 } }
+    table3[0] = arrayOf(1.0, 2.0, 3.0)
+    table3[1] = arrayOf(4.0, 5.0, 6.0)
+    val c = Matrix(table3)
 
-    A[0, 0] = 2
-    print(A.toString())
-    print(A.getDimension().toString() + '\n')
+    println("Matrix A:\n${a.toString()}")
+    println("Position [0,0] in A is ${a[0, 0]}\n")
+    println("A + C is:\n${(a + c).toString()}")
+    println("A - C is:\n${(a - c).toString()}")
+    println("A * B is:\n${(a * b).toString()}")
+    println("B * A is:\n${(b * a).toString()}")
+    println("A == C? ${a == c}\n")
+    println("Set 2.0 to [0, 0] in A")
+    a[0, 0] = 2.0
+    println("Matrix A:\n${a.toString()}")
+    println("A / 5.0\n")
+    a /= 5.0
+    println("Matrix A:\n${a.toString()}")
+    println("A == C? ${a == c}\n")
 
-    print((A-C).toString() + '\n')
-
-    print("B1\n" + B.toString() + '\n')
-
-    B *= A
-
-    print("B2\n" + B.toString() + '\n')
 }

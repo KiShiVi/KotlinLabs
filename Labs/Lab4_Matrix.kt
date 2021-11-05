@@ -1,14 +1,20 @@
-open class Matrix constructor(var matrix: Array<Array<Int>>) {
+open class Matrix constructor(private var inMatrix: Array<Array<Double>>) {
+    var matrix: Array<Array<Double>> = emptyArray()
+
     init {
-        if (matrix.isEmpty() || matrix[0].isEmpty())
+        if (inMatrix.isEmpty() || inMatrix[0].isEmpty())
             throw Exception("Empty Matrix")
-        val constSize = matrix[0].size
-        for (i in matrix)
+        val constSize = inMatrix[0].size
+        matrix = Array(inMatrix.size) { Array(inMatrix[0].size) { 0.0 } }
+        for (i in inMatrix)
             if (i.size != constSize)
                 throw Exception("Wrong Matrix")
+        for (i in inMatrix.indices)
+            for (j in inMatrix[0].indices)
+                matrix[i][j] = inMatrix[i][j]
     }
 
-    operator fun get(i: Int, j: Int): Int {
+    operator fun get(i: Int, j: Int): Double {
         if (i < 0 || j < 0 || i > (this.getDimension().first - 1) || j > (this.getDimension().second - 1))
             throw Exception("Wrong Index")
         return matrix[i][j]
@@ -19,34 +25,37 @@ open class Matrix constructor(var matrix: Array<Array<Int>>) {
         return Pair(matrix.size, matrix[0].size)
     }
 
-    operator fun plus(other: Matrix): Matrix {
+    open operator fun plus(other: Matrix): Matrix {
         if (this.getDimension() != other.getDimension())
             throw Exception("Different Dimensions")
-        val outMatrix: Array<Array<Int>> = Array(this.getDimension().first) { Array(this.getDimension().second) { 0 } }
+        val outMatrix: Array<Array<Double>> =
+            Array(this.getDimension().first) { Array(this.getDimension().second) { 0.0 } }
         for (i in matrix.indices)
             for (j in matrix[i].indices)
                 outMatrix[i][j] = this[i, j] + other[i, j]
         return Matrix(outMatrix)
     }
 
-    operator fun minus(other: Matrix): Matrix {
+    open operator fun minus(other: Matrix): Matrix {
         if (this.getDimension() != other.getDimension())
             throw Exception("Different Dimensions")
-        val outMatrix: Array<Array<Int>> = Array(this.getDimension().first) { Array(this.getDimension().second) { 0 } }
+        val outMatrix: Array<Array<Double>> =
+            Array(this.getDimension().first) { Array(this.getDimension().second) { 0.0 } }
         for (i in matrix.indices)
             for (j in matrix[i].indices)
                 outMatrix[i][j] = this[i, j] - other[i, j]
         return Matrix(outMatrix)
     }
 
-    operator fun times(other: Matrix): Matrix {
+    open operator fun times(other: Matrix): Matrix {
         if (this.getDimension().second != other.getDimension().first)
             throw Exception("Different Local Dimensions")
-        val outMatrix: Array<Array<Int>> = Array(this.getDimension().first) { Array(other.getDimension().second) { 0 } }
-        var tempScalar: Int
+        val outMatrix: Array<Array<Double>> =
+            Array(this.getDimension().first) { Array(other.getDimension().second) { 0.0 } }
+        var tempScalar: Double
         for (i in outMatrix.indices) {
             for (j in outMatrix[0].indices) {
-                tempScalar = 0
+                tempScalar = 0.0
                 for (k in matrix[i].indices) {
                     tempScalar += this[i, k] * other[k, j]
                 }
@@ -54,6 +63,49 @@ open class Matrix constructor(var matrix: Array<Array<Int>>) {
             }
         }
         return Matrix(outMatrix)
+    }
+
+    open operator fun div(scalar: Double): Matrix {
+        for (i in matrix.indices)
+            for (j in matrix[0].indices)
+                this[i, j] /= scalar
+        return this
+    }
+
+    open operator fun times(scalar: Double): Matrix {
+        for (i in matrix.indices)
+            for (j in matrix[0].indices)
+                this[i, j] *= scalar
+        return this
+    }
+
+    open operator fun unaryMinus(): Matrix {
+        for (i in matrix.indices)
+            for (j in matrix[0].indices)
+                this[i, j] = -this[i, j]
+        return this
+    }
+
+    open operator fun unaryPlus(): Matrix {
+        return this
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (other == null || other !is Matrix)
+            return false
+
+        if (this.getDimension() != other.getDimension())
+            return false
+
+        for (i in matrix.indices)
+            for (j in matrix[0].indices)
+                if (this[i, j] != other[i, j]) return false
+
+        return true
+    }
+
+    private operator fun set(i: Int, j: Int, value: Double) {
+        matrix[i][j] = value
     }
 
     override fun toString(): String {
@@ -65,10 +117,20 @@ open class Matrix constructor(var matrix: Array<Array<Int>>) {
         }
         return outString
     }
+
+    internal fun getArray(): Array<Array<Double>> {
+        return matrix
+    }
+
+    override fun hashCode(): Int {
+        var result = inMatrix.contentDeepHashCode()
+        result = 31 * result + matrix.contentDeepHashCode()
+        return result
+    }
 }
 
-class MutableMatrix constructor(matrix: Array<Array<Int>>) : Matrix(matrix) {
-    operator fun set(i: Int, j: Int, value: Int) {
+class MutableMatrix constructor(matrix: Array<Array<Double>>) : Matrix(matrix) {
+    operator fun set(i: Int, j: Int, value: Double) {
         matrix[i][j] = value
     }
 
@@ -78,35 +140,53 @@ class MutableMatrix constructor(matrix: Array<Array<Int>>) : Matrix(matrix) {
                 this[i, j] = other[i, j]
     }
 
-    operator fun plusAssign(other: Matrix) {
-        matrix = Array(this.getDimension().first) { Array(this.getDimension().second) { 0 } }
-        this.localSet(this + other)
+    override operator fun plus(other: Matrix): MutableMatrix {
+        return MutableMatrix((other + this).getArray())
     }
 
-    operator fun minusAssign(other: Matrix) {
-        matrix = Array(this.getDimension().first) { Array(this.getDimension().second) { 0 } }
-        this.localSet(this - other)
+    override operator fun minus(other: Matrix): MutableMatrix {
+        return MutableMatrix((other - this).getArray())
     }
 
-    operator fun timesAssign(other: Matrix) {
-        matrix = Array(this.getDimension().first) { Array(other.getDimension().second) { 0 } }
-        this.localSet(this * other)
+    override operator fun times(other: Matrix): MutableMatrix {
+        return MutableMatrix((other * this).getArray())
     }
 
-
-    operator fun unaryMinus(): Matrix {
-        TODO("Not yet implemented")
+    override operator fun times(scalar: Double): MutableMatrix {
+        return MutableMatrix((Matrix(this.getArray()) * scalar).getArray())
     }
 
-    operator fun unaryPlus(): Matrix {
+    override operator fun div(scalar: Double): MutableMatrix {
+        return MutableMatrix((Matrix(this.getArray()) / scalar).getArray())
+    }
+
+    override operator fun unaryMinus(): MutableMatrix {
+        return MutableMatrix(Matrix(this.getArray()).unaryMinus().getArray())
+    }
+
+    override operator fun unaryPlus(): MutableMatrix {
         return this
     }
 
-    operator fun div(other: Matrix) {
-        TODO("Not yet implemented")
+    operator fun plusAssign(other: Matrix){
+        localSet(this + other)
     }
 
-    operator fun div(scalar: Int) {
-        TODO("Not yet implemented")
+    operator fun minusAssign(other: Matrix){
+        localSet(this - other)
+    }
+
+    operator fun timesAssign(other: Matrix){
+        val tempMatrix = this * other
+        matrix = Array(tempMatrix.getDimension().first) { Array(tempMatrix.getDimension().second) { 0.0 } }
+        localSet(tempMatrix)
+    }
+
+    operator fun timesAssign(scalar: Double){
+        localSet(this * scalar)
+    }
+
+    operator fun divAssign(scalar: Double){
+        localSet(this / scalar)
     }
 }
