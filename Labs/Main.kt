@@ -30,27 +30,45 @@ fun main() {
 //    println(calculate("(sin(pi))^2 + (cos(pi))^2"))
 //    println(calculate("e-e+e-e+e*(e*e)-e*(e*e)"))
 
-    val shapeFactory = ShapeFactorImpl()
-    val shapeUtil = ShapeUtil()
-    val shapeList: MutableList<Shape> = arrayListOf()
-    shapeList.add(shapeFactory.createCircle(5.0))
-    shapeList.add(shapeFactory.createRandomCircle())
+//    val shapeFactory = ShapeFactorImpl()
+//    val shapeUtil = ShapeUtil()
+//    val shapeList: MutableList<Shape> = arrayListOf()
+//    shapeList.add(shapeFactory.createCircle(5.0))
+//    shapeList.add(shapeFactory.createRandomCircle())
+//
+//    shapeList.add(shapeFactory.createSquare(6.0))
+//    shapeList.add(shapeFactory.createRandomSquare())
+//
+//    shapeList.add(shapeFactory.createRectangle(4.0, 8.0))
+//    shapeList.add(shapeFactory.createRandomRectangle())
+//
+//    shapeList.add(shapeFactory.createTriangle(3.0, 4.0, 5.0))
+//    shapeList.add(shapeFactory.createRandomTriangle())
+//
+//    shapeList.add(shapeFactory.createRandomShape())
+//
+//    println(shapeUtil.calcTotalArea(shapeList))
+//    println(shapeUtil.calcTotalPerimeter(shapeList))
+//    println(shapeUtil.searchMaxAreaShape(shapeList).javaClass.typeName)
+//    println(shapeUtil.searchMinAreaShape(shapeList).javaClass.typeName)
+//    println(shapeUtil.searchMaxPerimeterShape(shapeList).javaClass.typeName)
+//    println(shapeUtil.searchMinPerimeterShape(shapeList).javaClass.typeName)
 
-    shapeList.add(shapeFactory.createSquare(6.0))
-    shapeList.add(shapeFactory.createRandomSquare())
+    val table = Array(2) { Array(3) { 0 } }
+    table[0] = arrayOf(1, 2, 3)     // первая строка таблицы
+    table[1] = arrayOf(4, 5, 6)     // вторая строка таблицы
+    var A: Matrix = Matrix(table)
 
-    shapeList.add(shapeFactory.createRectangle(4.0, 8.0))
-    shapeList.add(shapeFactory.createRandomRectangle())
+    val table2 = Array(3) { Array(2) { 0 } }
+    table2[0] = arrayOf(1, 2)     // первая строка таблицы
+    table2[1] = arrayOf(3, 4)     // вторая строка таблицы
+    table2[2] = arrayOf(5, 6)
+    var B: Matrix = Matrix(table2)
 
-    shapeList.add(shapeFactory.createTriangle(3.0, 4.0, 5.0))
-    shapeList.add(shapeFactory.createRandomTriangle())
+    val table3 = Array(2) { Array(3) { 0 } }
+    table3[0] = arrayOf(1, 2, 3)     // первая строка таблицы
+    table3[1] = arrayOf(4, 5, 6)     // вторая строка таблицы
+    var C: Matrix = Matrix(table)
 
-    shapeList.add(shapeFactory.createRandomShape())
-
-    println(shapeUtil.calcTotalArea(shapeList))
-    println(shapeUtil.calcTotalPerimeter(shapeList))
-    println(shapeUtil.searchMaxAreaShape(shapeList).javaClass.typeName)
-    println(shapeUtil.searchMinAreaShape(shapeList).javaClass.typeName)
-    println(shapeUtil.searchMaxPerimeterShape(shapeList).javaClass.typeName)
-    println(shapeUtil.searchMinPerimeterShape(shapeList).javaClass.typeName)
+    print((A-C).toString())
 }
