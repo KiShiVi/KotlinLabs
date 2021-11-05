@@ -56,10 +56,6 @@ open class Matrix constructor(var matrix: Array<Array<Int>>) {
         return Matrix(outMatrix)
     }
 
-    operator fun div(other: Matrix) {
-        TODO("Not yet implemented")
-    }
-
     override fun toString(): String {
         var outString = ""
         for (i in matrix.indices) {
@@ -73,17 +69,28 @@ open class Matrix constructor(var matrix: Array<Array<Int>>) {
 
 class MutableMatrix constructor(matrix: Array<Array<Int>>) : Matrix(matrix) {
     operator fun set(i: Int, j: Int, value: Int) {
-        TODO("Not yet implemented")
+        matrix[i][j] = value
     }
 
+    private fun localSet(other: Matrix) {
+        for (i in matrix.indices)
+            for (j in matrix[0].indices)
+                this[i, j] = other[i, j]
+    }
 
     operator fun plusAssign(other: Matrix) {
-        TODO("Not yet implemented")
+        matrix = Array(this.getDimension().first) { Array(this.getDimension().second) { 0 } }
+        this.localSet(this + other)
     }
 
+    operator fun minusAssign(other: Matrix) {
+        matrix = Array(this.getDimension().first) { Array(this.getDimension().second) { 0 } }
+        this.localSet(this - other)
+    }
 
-    operator fun timesAssign(scalar: Int) {
-        TODO("Not yet implemented")
+    operator fun timesAssign(other: Matrix) {
+        matrix = Array(this.getDimension().first) { Array(other.getDimension().second) { 0 } }
+        this.localSet(this * other)
     }
 
 
@@ -93,5 +100,13 @@ class MutableMatrix constructor(matrix: Array<Array<Int>>) : Matrix(matrix) {
 
     operator fun unaryPlus(): Matrix {
         return this
+    }
+
+    operator fun div(other: Matrix) {
+        TODO("Not yet implemented")
+    }
+
+    operator fun div(scalar: Int) {
+        TODO("Not yet implemented")
     }
 }

@@ -57,7 +57,7 @@ fun main() {
     val table = Array(2) { Array(3) { 0 } }
     table[0] = arrayOf(1, 2, 3)     // первая строка таблицы
     table[1] = arrayOf(4, 5, 6)     // вторая строка таблицы
-    var A: Matrix = Matrix(table)
+    var A: MutableMatrix = MutableMatrix(table)
 
     val table2 = Array(3) { Array(2) { 0 } }
     table2[0] = arrayOf(1, 2)     // первая строка таблицы
@@ -68,7 +68,17 @@ fun main() {
     val table3 = Array(2) { Array(3) { 0 } }
     table3[0] = arrayOf(1, 2, 3)     // первая строка таблицы
     table3[1] = arrayOf(4, 5, 6)     // вторая строка таблицы
-    var C: Matrix = Matrix(table)
+    var C: Matrix = Matrix(table3)
 
-    print((A-C).toString())
+    A[0, 0] = 2
+    print(A.toString())
+    print(A.getDimension().toString() + '\n')
+
+    print((A-C).toString() + '\n')
+
+    print("B1\n" + B.toString() + '\n')
+
+    B *= A
+
+    print("B2\n" + B.toString() + '\n')
 }
