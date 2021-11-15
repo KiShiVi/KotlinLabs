@@ -1,14 +1,14 @@
 open class Matrix constructor(private var inMatrix: Array<Array<Double>>) {
-    var matrix: Array<Array<Double>> = emptyArray()
+    protected var matrix: Array<Array<Double>> = emptyArray()
 
     init {
         if (inMatrix.isEmpty() || inMatrix[0].isEmpty())
-            throw Exception("Empty Matrix")
+            throw IllegalArgumentException("Empty Matrix")
         val constSize = inMatrix[0].size
         matrix = Array(inMatrix.size) { Array(inMatrix[0].size) { 0.0 } }
         for (i in inMatrix)
             if (i.size != constSize)
-                throw Exception("Wrong Matrix")
+                throw IllegalArgumentException("Wrong Matrix")
         for (i in inMatrix.indices)
             for (j in inMatrix[0].indices)
                 matrix[i][j] = inMatrix[i][j]
@@ -16,7 +16,7 @@ open class Matrix constructor(private var inMatrix: Array<Array<Double>>) {
 
     operator fun get(i: Int, j: Int): Double {
         if (i < 0 || j < 0 || i > (this.getDimension().first - 1) || j > (this.getDimension().second - 1))
-            throw Exception("Wrong Index")
+            throw IndexOutOfBoundsException("Wrong Index")
         return matrix[i][j]
 
     }
@@ -27,7 +27,7 @@ open class Matrix constructor(private var inMatrix: Array<Array<Double>>) {
 
     open operator fun plus(other: Matrix): Matrix {
         if (this.getDimension() != other.getDimension())
-            throw Exception("Different Dimensions")
+            throw IllegalArgumentException("Different Dimensions")
         val outMatrix: Array<Array<Double>> =
             Array(this.getDimension().first) { Array(this.getDimension().second) { 0.0 } }
         for (i in matrix.indices)
@@ -38,7 +38,7 @@ open class Matrix constructor(private var inMatrix: Array<Array<Double>>) {
 
     open operator fun minus(other: Matrix): Matrix {
         if (this.getDimension() != other.getDimension())
-            throw Exception("Different Dimensions")
+            throw IllegalArgumentException("Different Dimensions")
         val outMatrix: Array<Array<Double>> =
             Array(this.getDimension().first) { Array(this.getDimension().second) { 0.0 } }
         for (i in matrix.indices)
@@ -49,7 +49,7 @@ open class Matrix constructor(private var inMatrix: Array<Array<Double>>) {
 
     open operator fun times(other: Matrix): Matrix {
         if (this.getDimension().second != other.getDimension().first)
-            throw Exception("Different Local Dimensions")
+            throw IllegalArgumentException("Different Local Dimensions")
         val outMatrix: Array<Array<Double>> =
             Array(this.getDimension().first) { Array(other.getDimension().second) { 0.0 } }
         var tempScalar: Double
