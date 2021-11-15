@@ -49,10 +49,6 @@ class Rectangle(val a: Double, val b: Double) : Shape {
     override fun calcPerimeter(): Double {
         return 2 * (a + b)
     }
-
-    fun getSides(): Pair<Double, Double> {
-        return Pair(a, b)
-    }
 }
 
 class Triangle(val a: Double, val b: Double, val c: Double) : Shape {
@@ -72,10 +68,6 @@ class Triangle(val a: Double, val b: Double, val c: Double) : Shape {
 
     private fun calSemiPerimeter(): Double {
         return calcPerimeter() / 2
-    }
-
-    fun getSides(): Array<Double> {
-        return arrayOf<Double>(a, b, c)
     }
 }
 
