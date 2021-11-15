@@ -18,6 +18,10 @@ class Circle constructor(private val radius: Double) : Shape {
     override fun calcPerimeter(): Double {
         return 2 * Math.PI * radius
     }
+
+    fun getRadius(): Double {
+        return radius
+    }
 }
 
 class Square constructor(private val a: Double) : Shape {
@@ -32,6 +36,10 @@ class Square constructor(private val a: Double) : Shape {
 
     override fun calcPerimeter(): Double {
         return 4 * a
+    }
+
+    fun getSide(): Double {
+        return a
     }
 }
 
@@ -48,11 +56,15 @@ class Rectangle constructor(private val a: Double, private val b: Double) : Shap
     override fun calcPerimeter(): Double {
         return 2 * (a + b)
     }
+
+    fun getSides(): Pair<Double, Double> {
+        return Pair(a, b)
+    }
 }
 
 class Triangle constructor(private val a: Double, private val b: Double, private val c: Double) : Shape {
     init {
-        if (a + b <= c || a + c <= b || b + c <= a)
+        if (a + b <= c || a + c <= b || b + c <= a || a <= 0 || b <= 0 || c <= 0)
             throw Exception("Triangle with sides $a, $b, $c does not exist")
     }
 
@@ -67,6 +79,10 @@ class Triangle constructor(private val a: Double, private val b: Double, private
 
     private fun calSemiPerimeter(): Double {
         return calcPerimeter() / 2
+    }
+
+    fun getSides(): Array<Double> {
+        return arrayOf<Double>(a, b, c)
     }
 }
 
