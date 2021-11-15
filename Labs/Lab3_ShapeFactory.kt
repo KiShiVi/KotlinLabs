@@ -5,7 +5,7 @@ interface Shape {
     fun calcPerimeter(): Double
 }
 
-class Circle(private val radius: Double) : Shape {
+class Circle(val radius: Double) : Shape {
     init {
         if (radius <= 0)
             throw IllegalArgumentException("Circle with radius $radius does not exist")
@@ -19,12 +19,9 @@ class Circle(private val radius: Double) : Shape {
         return 2 * Math.PI * radius
     }
 
-    fun getRadius(): Double {
-        return radius
-    }
 }
 
-class Square(private val a: Double) : Shape {
+class Square(val a: Double) : Shape {
     init {
         if (a <= 0)
             throw IllegalArgumentException("Square with side $a does not exist")
@@ -37,13 +34,9 @@ class Square(private val a: Double) : Shape {
     override fun calcPerimeter(): Double {
         return 4 * a
     }
-
-    fun getSide(): Double {
-        return a
-    }
 }
 
-class Rectangle(private val a: Double, private val b: Double) : Shape {
+class Rectangle(val a: Double, val b: Double) : Shape {
     init {
         if (a <= 0 || b <= 0)
             throw IllegalArgumentException("Rectangle with sides $a, $b does not exist")
@@ -62,7 +55,7 @@ class Rectangle(private val a: Double, private val b: Double) : Shape {
     }
 }
 
-class Triangle(private val a: Double, private val b: Double, private val c: Double) : Shape {
+class Triangle(val a: Double, val b: Double, val c: Double) : Shape {
     init {
         if (a + b <= c || a + c <= b || b + c <= a || a <= 0 || b <= 0 || c <= 0)
             throw IllegalArgumentException("Triangle with sides $a, $b, $c does not exist")
