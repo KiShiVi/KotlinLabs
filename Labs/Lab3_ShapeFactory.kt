@@ -132,7 +132,7 @@ class ShapeFactorImpl : ShapeFactory {
     override fun createRandomTriangle(): Triangle {
         val a = randomDouble()
         val b = randomDouble()
-        val c = randomDouble((a + b).toInt(), abs(b - a).toInt())
+        val c = randomDouble(abs(b - a).toInt(), (a + b).toInt())
         return Triangle(a, b, c)
     }
 
@@ -147,7 +147,7 @@ class ShapeFactorImpl : ShapeFactory {
     }
 
     private fun randomDouble(a: Int = 10, b: Int = 10000): Double {
-        return (a..b).random().toDouble() / 100
+        return ((a * 100)..(b * 100)).random().toDouble() / 100
     }
 }
 
