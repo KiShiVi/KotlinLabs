@@ -66,24 +66,30 @@ open class Matrix constructor(private var inMatrix: Array<Array<Double>>) {
     }
 
     open operator fun div(scalar: Double): Matrix {
+        val outMatrix: Array<Array<Double>> =
+            Array(this.getDimension().first) { Array(this.getDimension().second) { 0.0 } }
         for (i in matrix.indices)
             for (j in matrix[0].indices)
-                this[i, j] /= scalar
-        return this
+                outMatrix[i][j] = this[i, j] / scalar
+        return Matrix(outMatrix)
     }
 
     open operator fun times(scalar: Double): Matrix {
+        val outMatrix: Array<Array<Double>> =
+            Array(this.getDimension().first) { Array(this.getDimension().second) { 0.0 } }
         for (i in matrix.indices)
             for (j in matrix[0].indices)
-                this[i, j] *= scalar
-        return this
+                outMatrix[i][j] = this[i, j] * scalar
+        return Matrix(outMatrix)
     }
 
     open operator fun unaryMinus(): Matrix {
+        val outMatrix: Array<Array<Double>> =
+            Array(this.getDimension().first) { Array(this.getDimension().second) { 0.0 } }
         for (i in matrix.indices)
             for (j in matrix[0].indices)
-                this[i, j] = -this[i, j]
-        return this
+                outMatrix[i][j] = -this[i, j]
+        return Matrix(outMatrix)
     }
 
     open operator fun unaryPlus(): Matrix {

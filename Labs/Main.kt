@@ -81,8 +81,7 @@ fun main() {
     a[0, 0] = 2.0
     println("Matrix A:\n${a.toString()}")
     println("A / 5.0\n")
-    a /= 5.0
-    println("Matrix A:\n${a.toString()}")
+    println("Matrix A:\n${(a/5.0).toString()}")
     println("A == C? ${a == c}\n")
 
 }
