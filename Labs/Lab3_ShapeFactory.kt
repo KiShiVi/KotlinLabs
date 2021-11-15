@@ -5,10 +5,10 @@ interface Shape {
     fun calcPerimeter(): Double
 }
 
-class Circle constructor(private val radius: Double) : Shape {
+class Circle (private val radius: Double) : Shape {
     init {
         if (radius <= 0)
-            throw Exception("Circle with radius $radius does not exist")
+            throw IllegalArgumentException("Circle with radius $radius does not exist")
     }
 
     override fun calcArea(): Double {
@@ -24,10 +24,10 @@ class Circle constructor(private val radius: Double) : Shape {
     }
 }
 
-class Square constructor(private val a: Double) : Shape {
+class Square (private val a: Double) : Shape {
     init {
         if (a <= 0)
-            throw Exception("Square with side $a does not exist")
+            throw IllegalArgumentException("Square with side $a does not exist")
     }
 
     override fun calcArea(): Double {
@@ -43,10 +43,10 @@ class Square constructor(private val a: Double) : Shape {
     }
 }
 
-class Rectangle constructor(private val a: Double, private val b: Double) : Shape {
+class Rectangle (private val a: Double, private val b: Double) : Shape {
     init {
         if (a <= 0 || b <= 0)
-            throw Exception("Rectangle with sides $a, $b does not exist")
+            throw IllegalArgumentException("Rectangle with sides $a, $b does not exist")
     }
 
     override fun calcArea(): Double {
@@ -62,10 +62,10 @@ class Rectangle constructor(private val a: Double, private val b: Double) : Shap
     }
 }
 
-class Triangle constructor(private val a: Double, private val b: Double, private val c: Double) : Shape {
+class Triangle (private val a: Double, private val b: Double, private val c: Double) : Shape {
     init {
         if (a + b <= c || a + c <= b || b + c <= a || a <= 0 || b <= 0 || c <= 0)
-            throw Exception("Triangle with sides $a, $b, $c does not exist")
+            throw IllegalArgumentException("Triangle with sides $a, $b, $c does not exist")
     }
 
     override fun calcArea(): Double {

@@ -30,29 +30,29 @@ fun main() {
 //    println(calculate("(sin(pi))^2 + (cos(pi))^2"))
 //    println(calculate("e-e+e-e+e*(e*e)-e*(e*e)"))
 
-//    val shapeFactory = ShapeFactorImpl()
-//    val shapeUtil = ShapeUtil()
-//    val shapeList: MutableList<Shape> = arrayListOf()
-//    shapeList.add(shapeFactory.createCircle(5.0))
-//    shapeList.add(shapeFactory.createRandomCircle())
-//
-//    shapeList.add(shapeFactory.createSquare(6.0))
-//    shapeList.add(shapeFactory.createRandomSquare())
-//
-//    shapeList.add(shapeFactory.createRectangle(4.0, 8.0))
-//    shapeList.add(shapeFactory.createRandomRectangle())
-//
-//    shapeList.add(shapeFactory.createTriangle(3.0, 4.0, 5.0))
-//    shapeList.add(shapeFactory.createRandomTriangle())
-//
-//    shapeList.add(shapeFactory.createRandomShape())
-//
-//    println(shapeUtil.calcTotalArea(shapeList))
-//    println(shapeUtil.calcTotalPerimeter(shapeList))
-//    println(shapeUtil.searchMaxAreaShape(shapeList).javaClass.typeName)
-//    println(shapeUtil.searchMinAreaShape(shapeList).javaClass.typeName)
-//    println(shapeUtil.searchMaxPerimeterShape(shapeList).javaClass.typeName)
-//    println(shapeUtil.searchMinPerimeterShape(shapeList).javaClass.typeName)
+    val shapeFactory = ShapeFactorImpl()
+    val shapeUtil = ShapeUtil()
+    val shapeList: MutableList<Shape> = arrayListOf()
+    shapeList.add(shapeFactory.createCircle(5.0))
+    shapeList.add(shapeFactory.createRandomCircle())
+
+    shapeList.add(shapeFactory.createSquare(6.0))
+    shapeList.add(shapeFactory.createRandomSquare())
+
+    shapeList.add(shapeFactory.createRectangle(4.0, 8.0))
+    shapeList.add(shapeFactory.createRandomRectangle())
+
+    shapeList.add(shapeFactory.createTriangle(3.0, 4.0, 5.0))
+    shapeList.add(shapeFactory.createRandomTriangle())
+
+    shapeList.add(shapeFactory.createRandomShape())
+
+    println(shapeUtil.calcTotalArea(shapeList))
+    println(shapeUtil.calcTotalPerimeter(shapeList))
+    println(shapeUtil.searchMaxAreaShape(shapeList).javaClass.typeName)
+    println(shapeUtil.searchMinAreaShape(shapeList).javaClass.typeName)
+    println(shapeUtil.searchMaxPerimeterShape(shapeList).javaClass.typeName)
+    println(shapeUtil.searchMinPerimeterShape(shapeList).javaClass.typeName)
 
     val table = Array(2) { Array(3) { 0.0 } }
     table[0] = arrayOf(1.0, 2.0, 3.0)
