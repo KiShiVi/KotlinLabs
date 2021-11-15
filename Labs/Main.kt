@@ -49,10 +49,10 @@ fun main() {
 
     println(shapeUtil.calcTotalArea(shapeList))
     println(shapeUtil.calcTotalPerimeter(shapeList))
-    println(shapeUtil.searchMaxAreaShape(shapeList).javaClass.typeName)
-    println(shapeUtil.searchMinAreaShape(shapeList).javaClass.typeName)
-    println(shapeUtil.searchMaxPerimeterShape(shapeList).javaClass.typeName)
-    println(shapeUtil.searchMinPerimeterShape(shapeList).javaClass.typeName)
+    println(shapeUtil.searchMaxAreaShape(shapeList)?.javaClass?.typeName)
+    println(shapeUtil.searchMinAreaShape(shapeList)?.javaClass?.typeName)
+    println(shapeUtil.searchMaxPerimeterShape(shapeList)?.javaClass?.typeName)
+    println(shapeUtil.searchMinPerimeterShape(shapeList)?.javaClass?.typeName)
 
     val table = Array(2) { Array(3) { 0.0 } }
     table[0] = arrayOf(1.0, 2.0, 3.0)

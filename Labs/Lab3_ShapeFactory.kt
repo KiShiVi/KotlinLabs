@@ -168,9 +168,9 @@ class ShapeUtil {
         return totalPerimeter
     }
 
-    fun searchMinAreaShape(shapes: List<Shape>): Shape {
+    fun searchMinAreaShape(shapes: List<Shape>): Shape? {
         if (shapes.isEmpty())
-            throw Exception("List of shapes is empty")
+            return null
         var minArea = shapes[0].calcArea()
         var minShape = shapes[0]
         for (shape in shapes) {
@@ -182,9 +182,9 @@ class ShapeUtil {
         return minShape
     }
 
-    fun searchMaxAreaShape(shapes: List<Shape>): Shape {
+    fun searchMaxAreaShape(shapes: List<Shape>): Shape? {
         if (shapes.isEmpty())
-            throw Exception("List of shapes is empty")
+            return null
         var maxArea = shapes[0].calcArea()
         var maxShape = shapes[0]
         for (shape in shapes) {
@@ -196,9 +196,9 @@ class ShapeUtil {
         return maxShape
     }
 
-    fun searchMinPerimeterShape(shapes: List<Shape>): Shape {
+    fun searchMinPerimeterShape(shapes: List<Shape>): Shape? {
         if (shapes.isEmpty())
-            throw Exception("List of shapes is empty")
+            return null
         var minPerimeter = shapes[0].calcPerimeter()
         var minShape = shapes[0]
         for (shape in shapes) {
@@ -210,9 +210,9 @@ class ShapeUtil {
         return minShape
     }
 
-    fun searchMaxPerimeterShape(shapes: List<Shape>): Shape {
+    fun searchMaxPerimeterShape(shapes: List<Shape>): Shape? {
         if (shapes.isEmpty())
-            throw Exception("List of shapes is empty")
+            return null
         var maxPerimeter = shapes[0].calcPerimeter()
         var maxShape = shapes[0]
         for (shape in shapes) {
