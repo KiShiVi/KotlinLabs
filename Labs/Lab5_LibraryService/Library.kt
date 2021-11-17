@@ -4,11 +4,17 @@ class Library : LibraryService{
     private val bookStatuses: MutableMap<Book, Status> = mutableMapOf()
 
     override fun findBooks(title: String): List<Book> {
-        TODO("Not yet implemented")
+        val result: MutableList<Book> = mutableListOf()
+        for (key in bookStatuses.keys)
+            if (key.title == title) result.add(key)
+        return result
     }
 
     override fun findBooks(author: Author): List<Book> {
-        TODO("Not yet implemented")
+        val result: MutableList<Book> = mutableListOf()
+        for (key in bookStatuses.keys)
+            if (key.author == author) result.add(key)
+        return result
     }
 
     override fun findBooks(year: Year): List<Book> {
@@ -40,7 +46,7 @@ class Library : LibraryService{
     }
 
     override fun addBook(book: Book, status: Status) {
-        TODO("Not yet implemented")
+        bookStatuses[book] = status
     }
 
     override fun registerUser(user: User) {

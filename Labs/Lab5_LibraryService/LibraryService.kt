@@ -1,11 +1,11 @@
 package Lab5_LibraryService
 
-class Book (val title: String, val author: Author, val genre: Genre, val year: Year){
+data class Book (val title: String, val author: Author, val genre: Genre, val year: Year){
     val bookList: MutableList<Book> = mutableListOf()
 }
-class Author (val name: String)
-class User (val name: String)
-class Year (val year: Int)
+data class Author (val name: String)
+data class User (val name: String)
+data class Year (val year: Int)
 
 enum class Genre {
     DETECTIVE,
