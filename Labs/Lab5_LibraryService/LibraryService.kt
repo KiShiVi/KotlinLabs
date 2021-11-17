@@ -27,7 +27,7 @@ interface LibraryService {
     fun findBooks(title: String): List<Book>
     fun findBooks(author: Author): List<Book>
     fun findBooks(year: Year): List<Book>
-    fun findBooks(genre: Genre)
+    fun findBooks(genre: Genre): List<Book>
 
     fun getAllBooks(): List<Book>
     fun getAllAvailableBooks(): List<Book>

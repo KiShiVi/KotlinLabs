@@ -18,11 +18,17 @@ class Library : LibraryService{
     }
 
     override fun findBooks(year: Year): List<Book> {
-        TODO("Not yet implemented")
+        val result: MutableList<Book> = mutableListOf()
+        for (key in bookStatuses.keys)
+            if (key.year == year) result.add(key)
+        return result
     }
 
-    override fun findBooks(genre: Genre) {
-        TODO("Not yet implemented")
+    override fun findBooks(genre: Genre): List<Book> {
+        val result: MutableList<Book> = mutableListOf()
+        for (key in bookStatuses.keys)
+            if (key.genre == genre) result.add(key)
+        return result
     }
 
     override fun getAllBooks(): List<Book> {
