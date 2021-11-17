@@ -4,30 +4,45 @@ class Library : LibraryService {
     private val users: MutableList<User> = mutableListOf()
     private val bookStatuses: MutableMap<Book, Status> = mutableMapOf()
 
-    override fun findBooks(title: String): List<Book> {
+    override fun findBooks(title: String?, author: Author?, year: Year?, genre: Genre?): List<Book> {
+        var result: List<Book> = listOf()
+        for (key in bookStatuses.keys) {
+            if (title != null) result = findBooks(title = title, bookList = bookStatuses.keys.toList())
+            if (author != null) result = findBooks(author = author, bookList = result)
+            if (year != null) result = findBooks(year = year, bookList = result)
+            if (genre != null) result = findBooks(genre = genre, bookList = result)
+        }
+        return result
+    }
+
+    override fun findBooks(title: String, bookList: List<Book>?): List<Book> {
+        val privateBookList: List<Book> = bookList ?: bookStatuses.keys.toList()
         val result: MutableList<Book> = mutableListOf()
-        for (key in bookStatuses.keys)
+        for (key in privateBookList)
             if (key.title == title) result.add(key)
         return result
     }
 
-    override fun findBooks(author: Author): List<Book> {
+    override fun findBooks(author: Author, bookList: List<Book>?): List<Book> {
+        val privateBookList: List<Book> = bookList ?: bookStatuses.keys.toList()
         val result: MutableList<Book> = mutableListOf()
-        for (key in bookStatuses.keys)
+        for (key in privateBookList)
             if (key.author == author) result.add(key)
         return result
     }
 
-    override fun findBooks(year: Year): List<Book> {
+    override fun findBooks(year: Year, bookList: List<Book>?): List<Book> {
+        val privateBookList: List<Book> = bookList ?: bookStatuses.keys.toList()
         val result: MutableList<Book> = mutableListOf()
-        for (key in bookStatuses.keys)
+        for (key in privateBookList)
             if (key.year == year) result.add(key)
         return result
     }
 
-    override fun findBooks(genre: Genre): List<Book> {
+    override fun findBooks(genre: Genre, bookList: List<Book>?): List<Book> {
+        val privateBookList: List<Book> = bookList ?: bookStatuses.keys.toList()
         val result: MutableList<Book> = mutableListOf()
-        for (key in bookStatuses.keys)
+        for (key in privateBookList)
             if (key.genre == genre) result.add(key)
         return result
     }
