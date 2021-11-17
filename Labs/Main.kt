@@ -1,3 +1,5 @@
+import Lab5_LibraryService.*
+
 fun main() {
 //    val NotAlignedText: String = """Впервые более чем за 250 млн лет ящерицы смогли
 //        |восстановить идеальный хвост. Это получилось при помощи ученых из Университета
@@ -30,58 +32,71 @@ fun main() {
 //    println(calculate("(sin(pi))^2 + (cos(pi))^2"))
 //    println(calculate("e-e+e-e+e*(e*e)-e*(e*e)"))
 
-    val shapeFactory = ShapeFactorImpl()
-    val shapeUtil = ShapeUtil()
-    val shapeList: MutableList<Shape> = arrayListOf()
-    shapeList.add(shapeFactory.createCircle(5.0))
-    shapeList.add(shapeFactory.createRandomCircle())
+//    val shapeFactory = ShapeFactorImpl()
+//    val shapeUtil = ShapeUtil()
+//    val shapeList: MutableList<Shape> = arrayListOf()
+//    shapeList.add(shapeFactory.createCircle(5.0))
+//    shapeList.add(shapeFactory.createRandomCircle())
+//
+//    shapeList.add(shapeFactory.createSquare(6.0))
+//    shapeList.add(shapeFactory.createRandomSquare())
+//
+//    shapeList.add(shapeFactory.createRectangle(4.0, 8.0))
+//    shapeList.add(shapeFactory.createRandomRectangle())
+//
+//    shapeList.add(shapeFactory.createTriangle(3.0, 4.0, 5.0))
+//    shapeList.add(shapeFactory.createRandomTriangle())
+//
+//    shapeList.add(shapeFactory.createRandomShape())
+//
+//    println(shapeUtil.calcTotalArea(shapeList))
+//    println(shapeUtil.calcTotalPerimeter(shapeList))
+//    println(shapeUtil.searchMaxAreaShape(shapeList)?.javaClass?.typeName)
+//    println(shapeUtil.searchMinAreaShape(shapeList)?.javaClass?.typeName)
+//    println(shapeUtil.searchMaxPerimeterShape(shapeList)?.javaClass?.typeName)
+//    println(shapeUtil.searchMinPerimeterShape(shapeList)?.javaClass?.typeName)
+//
+//    val table = Array(2) { Array(3) { 0.0 } }
+//    table[0] = arrayOf(1.0, 2.0, 3.0)
+//    table[1] = arrayOf(4.0, 5.0, 6.0)
+//    val a = MutableMatrix(table)
+//
+//    val table2 = Array(3) { Array(2) { 0.0 } }
+//    table2[0] = arrayOf(1.0, 2.0)
+//    table2[1] = arrayOf(3.0, 4.0)
+//    table2[2] = arrayOf(5.0, 6.0)
+//    val b = Matrix(table2)
+//
+//    val table3 = Array(2) { Array(3) { 0.0 } }
+//    table3[0] = arrayOf(1.0, 2.0, 3.0)
+//    table3[1] = arrayOf(4.0, 5.0, 6.0)
+//    val c = Matrix(table3)
+//
+//    println("Matrix A:\n${a.toString()}")
+//    println("Position [0,0] in A is ${a[0, 0]}\n")
+//    println("A + C is:\n${(a + c).toString()}")
+//    println("A - C is:\n${(a - c).toString()}")
+//    println("A * B is:\n${(a * b).toString()}")
+//    println("B * A is:\n${(b * a).toString()}")
+//    println("A == C? ${a == c}\n")
+//    println("Set 2.0 to [0, 0] in A")
+//    a[0, 0] = 2.0
+//    println("Matrix A:\n${a.toString()}")
+//    println("A / 5.0\n")
+//    println("Matrix A:\n${(a/5.0).toString()}")
+//    println("A == C? ${a == c}\n")
 
-    shapeList.add(shapeFactory.createSquare(6.0))
-    shapeList.add(shapeFactory.createRandomSquare())
+    val library: LibraryService = Library()
+    library.addBook(Book("title1", Author("name1"), Genre.DETECTIVE, Year(2001)), Status.Available)
+    library.addBook(Book("title2", Author("name2"), Genre.DETECTIVE, Year(2001)), Status.Restoration)
+    for (i in library.findBooks(Author("name2")))
+        println(i.title)
 
-    shapeList.add(shapeFactory.createRectangle(4.0, 8.0))
-    shapeList.add(shapeFactory.createRandomRectangle())
+    println()
 
-    shapeList.add(shapeFactory.createTriangle(3.0, 4.0, 5.0))
-    shapeList.add(shapeFactory.createRandomTriangle())
+    for (i in library.getAllAvailableBooks())
+        println(i.title)
 
-    shapeList.add(shapeFactory.createRandomShape())
-
-    println(shapeUtil.calcTotalArea(shapeList))
-    println(shapeUtil.calcTotalPerimeter(shapeList))
-    println(shapeUtil.searchMaxAreaShape(shapeList)?.javaClass?.typeName)
-    println(shapeUtil.searchMinAreaShape(shapeList)?.javaClass?.typeName)
-    println(shapeUtil.searchMaxPerimeterShape(shapeList)?.javaClass?.typeName)
-    println(shapeUtil.searchMinPerimeterShape(shapeList)?.javaClass?.typeName)
-
-    val table = Array(2) { Array(3) { 0.0 } }
-    table[0] = arrayOf(1.0, 2.0, 3.0)
-    table[1] = arrayOf(4.0, 5.0, 6.0)
-    val a = MutableMatrix(table)
-
-    val table2 = Array(3) { Array(2) { 0.0 } }
-    table2[0] = arrayOf(1.0, 2.0)
-    table2[1] = arrayOf(3.0, 4.0)
-    table2[2] = arrayOf(5.0, 6.0)
-    val b = Matrix(table2)
-
-    val table3 = Array(2) { Array(3) { 0.0 } }
-    table3[0] = arrayOf(1.0, 2.0, 3.0)
-    table3[1] = arrayOf(4.0, 5.0, 6.0)
-    val c = Matrix(table3)
-
-    println("Matrix A:\n${a.toString()}")
-    println("Position [0,0] in A is ${a[0, 0]}\n")
-    println("A + C is:\n${(a + c).toString()}")
-    println("A - C is:\n${(a - c).toString()}")
-    println("A * B is:\n${(a * b).toString()}")
-    println("B * A is:\n${(b * a).toString()}")
-    println("A == C? ${a == c}\n")
-    println("Set 2.0 to [0, 0] in A")
-    a[0, 0] = 2.0
-    println("Matrix A:\n${a.toString()}")
-    println("A / 5.0\n")
-    println("Matrix A:\n${(a/5.0).toString()}")
-    println("A == C? ${a == c}\n")
-
+    println(library.getBookStatus(Book("title1", Author("name1"), Genre.DETECTIVE, Year(2001)))?.javaClass?.typeName)
+    println(library.getBookStatus(Book("title2", Author("name2"), Genre.DETECTIVE, Year(2001)))?.javaClass?.typeName)
 }

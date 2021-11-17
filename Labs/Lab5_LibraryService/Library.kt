@@ -51,7 +51,7 @@ class Library : LibraryService{
     }
 
     override fun getAllBookStatuses(): Map<Book, Status> {
-        TODO("Not yet implemented")
+        return bookStatuses
     }
 
     override fun setBookStatus(book: Book, status: Status) {
