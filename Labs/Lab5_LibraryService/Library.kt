@@ -43,7 +43,7 @@ class Library : LibraryService{
         TODO("Not yet implemented")
     }
 
-    override fun registerUser() {
+    override fun registerUser(user: User) {
         TODO("Not yet implemented")
     }
 
