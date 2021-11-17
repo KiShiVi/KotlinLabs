@@ -44,8 +44,10 @@ class Library : LibraryService{
         return result
     }
 
-    override fun getBookStatus(book: Book): Status {
-        TODO("Not yet implemented")
+    override fun getBookStatus(book: Book): Status? {
+        if (bookStatuses[book] == null)
+            return null
+        return bookStatuses[book]
     }
 
     override fun getAllBookStatuses(): Map<Book, Status> {

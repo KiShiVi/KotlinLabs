@@ -32,7 +32,7 @@ interface LibraryService {
     fun getAllBooks(): List<Book>
     fun getAllAvailableBooks(): List<Book>
 
-    fun getBookStatus(book: Book): Status
+    fun getBookStatus(book: Book): Status?
     fun getAllBookStatuses(): Map<Book, Status>
 
     fun setBookStatus(book: Book, status: Status)
