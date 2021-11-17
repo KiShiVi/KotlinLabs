@@ -32,11 +32,16 @@ class Library : LibraryService{
     }
 
     override fun getAllBooks(): List<Book> {
-        TODO("Not yet implemented")
+        val result: MutableList<Book> = mutableListOf()
+        for (key in bookStatuses.keys) result.add(key)
+        return result
     }
 
     override fun getAllAvailableBooks(): List<Book> {
-        TODO("Not yet implemented")
+        val result: MutableList<Book> = mutableListOf()
+        for ((key, value) in bookStatuses)
+            if (value == Status.Available) result.add(key)
+        return result
     }
 
     override fun getBookStatus(book: Book): Status {
