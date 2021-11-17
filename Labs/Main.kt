@@ -87,16 +87,18 @@ fun main() {
 //    println("A == C? ${a == c}\n")
 
     val library: LibraryService = Library()
-    library.addBook(Book("title1", Author("name1"), Genre.DETECTIVE, Year(2001)), Status.Available)
-    library.addBook(Book("title2", Author("name2"), Genre.DETECTIVE, Year(2001)), Status.Restoration)
-    for (i in library.findBooks(Author("name2")))
-        println(i.title)
 
-    println()
+    library.addBook(Book("Шерлок Холмс", Author("Конан Дойль"), Genre.DETECTIVE, Year(1892)), Status.Available)
+    library.addBook(Book("Шерлок Холмс", Author("Конан Дойль"), Genre.DETECTIVE, Year(1893)), Status.Available)
+    library.addBook(Book("Шерлок Холмс", Author("Конан Дойль"), Genre.DETECTIVE, Year(1903)), Status.Available)
+    library.addBook(Book("Человек", Author("Иоганн Ранке"), Genre.RELIGIOUS, Year(1903)), Status.Available)
+    library.addBook(Book("Автостопом по галактике", Author("Дуглас Адамс"), Genre.FANTASY, Year(1979)), Status.Available)
+    library.addBook(Book("Идиот", Author("Федор Достоевский"), Genre.NOVEL, Year(1868)), Status.Available)
+    library.addBook(Book("Библия", Author("Бог"), Genre.RELIGIOUS, Year(1228)), Status.Available)
+    library.addBook(Book("Чистый код", Author("Роберт Мартин"), Genre.TECHNICAL, Year(2008)), Status.Available)
 
-    for (i in library.getAllAvailableBooks())
-        println(i.title)
+    val result: List<Book> = library.findBooks(genre = Genre.RELIGIOUS)
 
-    println(library.getBookStatus(Book("title1", Author("name1"), Genre.DETECTIVE, Year(2001)))?.javaClass?.typeName)
-    println(library.getBookStatus(Book("title2", Author("name2"), Genre.DETECTIVE, Year(2001)))?.javaClass?.typeName)
+    for (i in result)
+        println(i)
 }
