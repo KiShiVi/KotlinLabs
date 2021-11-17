@@ -78,11 +78,15 @@ class Library : LibraryService{
     }
 
     override fun takeBook(user: User, book: Book) {
-        TODO("Not yet implemented")
+        if (!users.contains(user) || !bookStatuses.keys.contains(book))
+            return
+        setBookStatus(book, Status.UsedBy(user))
     }
 
     override fun returnBook(book: Book) {
-        TODO("Not yet implemented")
+        if (!bookStatuses.keys.contains(book))
+            return
+        setBookStatus(book, Status.Available)
     }
 
 }
