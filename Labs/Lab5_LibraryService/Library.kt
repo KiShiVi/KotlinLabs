@@ -1,6 +1,7 @@
 package Lab5_LibraryService
 
 class Library : LibraryService{
+    private val users: MutableList<User> = mutableListOf()
     private val bookStatuses: MutableMap<Book, Status> = mutableMapOf()
 
     override fun findBooks(title: String): List<Book> {
@@ -55,7 +56,9 @@ class Library : LibraryService{
     }
 
     override fun setBookStatus(book: Book, status: Status) {
-        TODO("Not yet implemented")
+        if (bookStatuses[book] == null)
+            return
+        bookStatuses[book] = status
     }
 
     override fun addBook(book: Book, status: Status) {
@@ -63,11 +66,15 @@ class Library : LibraryService{
     }
 
     override fun registerUser(user: User) {
-        TODO("Not yet implemented")
+        if (users.contains(user))
+            return
+        users.add(user)
     }
 
     override fun unregisterUser(user: User) {
-        TODO("Not yet implemented")
+        if (!users.contains(user))
+            return
+        users.remove(user)
     }
 
     override fun takeBook(user: User, book: Book) {
