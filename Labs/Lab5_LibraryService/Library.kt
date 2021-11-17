@@ -1,6 +1,6 @@
 package Lab5_LibraryService
 
-class Library : LibraryService{
+class Library : LibraryService {
     private val users: MutableList<User> = mutableListOf()
     private val bookStatuses: MutableMap<Book, Status> = mutableMapOf()
 
@@ -80,6 +80,10 @@ class Library : LibraryService{
     override fun takeBook(user: User, book: Book) {
         if (!users.contains(user) || !bookStatuses.keys.contains(book))
             return
+        if (bookStatuses[book] != Status.Available)
+            return
+        if (countOfTakenBooksByUser(user) > 3)
+            return
         setBookStatus(book, Status.UsedBy(user))
     }
 
@@ -89,4 +93,10 @@ class Library : LibraryService{
         setBookStatus(book, Status.Available)
     }
 
+    private fun countOfTakenBooksByUser(user: User): Int {
+        var result = 0
+        for (value in bookStatuses.values)
+            if (value == Status.UsedBy(user)) result++
+        return result
+    }
 }

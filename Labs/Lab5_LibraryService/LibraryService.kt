@@ -1,8 +1,6 @@
 package Lab5_LibraryService
 
-data class Book (val title: String, val author: Author, val genre: Genre, val year: Year){
-    val bookList: MutableList<Book> = mutableListOf()
-}
+data class Book (val title: String, val author: Author, val genre: Genre, val year: Year)
 data class Author (val name: String)
 data class User (val name: String)
 data class Year (val year: Int)
