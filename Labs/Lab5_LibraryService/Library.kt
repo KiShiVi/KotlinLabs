@@ -67,7 +67,7 @@ class Library : LibraryService {
     }
 
     override fun getAllBookStatuses(): Map<Book, Status> {
-        return bookStatuses
+        return bookStatuses.toMap()
     }
 
     override fun setBookStatus(book: Book, status: Status) {
@@ -80,26 +80,29 @@ class Library : LibraryService {
         bookStatuses[book] = status
     }
 
-    override fun registerUser(user: User) {
+    override fun registerUser(user: User): User? {
         if (users.contains(user))
-            return
+            return null
         users.add(user)
+        return user
     }
 
-    override fun unregisterUser(user: User) {
+    override fun unregisterUser(user: User): User? {
         if (!users.contains(user))
-            return
+            return null
         users.remove(user)
+        return user
     }
 
-    override fun takeBook(user: User, book: Book) {
+    override fun takeBook(user: User, book: Book): Book? {
         if (!users.contains(user) || !bookStatuses.keys.contains(book))
-            return
+            return null
         if (bookStatuses[book] != Status.Available)
-            return
+            return null
         if (countOfTakenBooksByUser(user) > 3)
-            return
+            return null
         setBookStatus(book, Status.UsedBy(user))
+        return book
     }
 
     override fun returnBook(book: Book) {
@@ -111,7 +114,7 @@ class Library : LibraryService {
     private fun countOfTakenBooksByUser(user: User): Int {
         var result = 0
         for (value in bookStatuses.values)
-            if (value == Status.UsedBy(user)) result++
+            if (value is Status.UsedBy && value.user == user) result++
         return result
     }
 }

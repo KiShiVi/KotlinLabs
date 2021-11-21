@@ -38,9 +38,9 @@ interface LibraryService {
 
     fun addBook(book: Book, status: Status = Status.Available)
 
-    fun registerUser(user: User)
-    fun unregisterUser(user: User)
+    fun registerUser(user: User): User?
+    fun unregisterUser(user: User): User?
 
-    fun takeBook(user: User, book: Book)
+    fun takeBook(user: User, book: Book): Book?
     fun returnBook(book: Book)
 }
