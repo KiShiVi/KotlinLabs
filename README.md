@@ -202,3 +202,227 @@ class Triangle(val a: Double, val b: Double, val c: Double) : Shape
 
 ---
 ---
+
+## Lab #4 - Matrix
+
+---
+
+### Task
+
+It is necessary to implement a class for working with two-dimensional matrices (you can choose any numeric data type for matrix elements)
+
+The class should provide capabilities for:
+
+- Matrix initialization
+- Viewing the value of the element at position (i, j) and changing this element through the [] operator
+- View matrix dimensions
+- Performing arithmetic operations on matrices using the operators +, -, *, + =, - +, * =. Clarification: the “+” operator must create a new matrix and does not change the state of the matrices to the left and right of the operator. The “+ =” operator must modify the matrix on the left (see the hint). Likewise for other pairs of operators.
+- Multiplication / division of a matrix by a scalar through the operators *, /, * =, / =
+- Using the unary plus and minus operators
+- Comparing two matrices ==
+- Outputting the matrix state to a string - toString ()
+- Divide the implementation into a hierarchy of immutable and mutable matrices (Matrix, MutableMatrix)
+
+---
+
+### API
+
+---
+
+#### Matrix
+
+```Matrix(inMatrix: Array<Array<Double>>)``` - matrix constructor
+
+***inMatrix: Array\<Array\<Double\>\>*** - input two-dimensional array, which is a matrix
+
+```getDimension(): Pair<Int, Int>``` - get dimension of Matrix
+
+The following operators are overloaded in the matrix:
+
+- [] ```operator fun get(i: Int, j: Int): Double```
+- \+ ```operator fun plus(other: Matrix): Matrix```
+- \+ ```operator fun unaryPlus(): Matrix```
+- \- ```operator fun minus(other: Matrix): Matrix```
+- \- ```operator fun unaryMinus(): Matrix```
+- \* ```operator fun times(other: Matrix): Matrix```
+- \* ```operator fun times(scalar: Double): Matrix```
+- / ```operator fun div(scalar: Double): Matrix```
+- == ```fun equals(other: Any?): Boolean```
+- *toString()*
+- *hashCode()*
+
+---
+
+#### MutableMatrix: Matrix(matrix)
+
+
+```MutableMatrix(inMatrix: Array<Array<Double>>)``` - mutable matrix constructor
+
+***inMatrix: Array\<Array\<Double\>\>*** - input two-dimensional array, which is a matrix
+
+```getDimension(): Pair<Int, Int>``` - get dimension of Matrix
+
+The following operators are overloaded in the matrix:
+
+- = ```operator fun set(i: Int, j: Int, value: Double)```
+- += ```operator fun plusAssign(other: Matrix)```
+- \-= ```operator fun minusAssign(other: Matrix)```
+- \*= ```operator fun timesAssign(other: Matrix)```
+- \*= ```operator fun timesAssign(scalar: Double)```
+- / ```operator fun divAssign(scalar: Double)```
+
+---
+### Example
+
+```
+    val table = Array(2) { Array(3) { 0.0 } }
+    table[0] = arrayOf(1.0, 2.0, 3.0)
+    table[1] = arrayOf(4.0, 5.0, 6.0)
+    val a = MutableMatrix(table)
+
+    val table2 = Array(3) { Array(2) { 0.0 } }
+    table2[0] = arrayOf(1.0, 2.0)
+    table2[1] = arrayOf(3.0, 4.0)
+    table2[2] = arrayOf(5.0, 6.0)
+    val b = Matrix(table2)
+
+    val table3 = Array(2) { Array(3) { 0.0 } }
+    table3[0] = arrayOf(1.0, 2.0, 3.0)
+    table3[1] = arrayOf(4.0, 5.0, 6.0)
+    val c = Matrix(table3)
+
+    println("Matrix A:\n${a.toString()}")
+    println("Position [0,0] in A is ${a[0, 0]}\n")
+    println("A + C is:\n${(a + c).toString()}")
+    println("A - C is:\n${(a - c).toString()}")
+    println("A * B is:\n${(a * b).toString()}")
+    println("B * A is:\n${(b * a).toString()}")
+    println("A == C? ${a == c}\n")
+    println("Set 2.0 to [0, 0] in A")
+    a[0, 0] = 2.0
+    println("Matrix A:\n${a.toString()}")
+    println("A / 5.0\n")
+    println("Matrix A:\n${(a/5.0).toString()}")
+    println("A == C? ${a == c}\n")
+```
+
+---
+---
+
+## Lab #5 - LibraryService
+
+---
+
+### Task
+
+Implement the "Library" service model.
+
+The library has books, each book has a title, list of authors, genre and year of publication.
+The library has users, each of them has a first and last name.
+
+Each book in the library can have one of the statuses:
+- available,
+- used by user% user_name%,
+- admission is expected,
+- on restoration
+
+Implement a service with the following capabilities:
+- Register new users and delete existing ones.
+- Add new books
+- View a list of all books
+- View a list of all available books
+- View the current status of all books
+- Search for books by author, title, genre, year of publication
+- Give out the book to the user
+- Return the book to the library
+- Send the book for restoration
+- Add information that a book will soon be available in the library.
+
+Restrictions:
+- For simplicity, we assume that each book exists in a single copy.
+- You cannot give one user more than three books per hand
+- All operations must check the possibility of their execution and check the integrity of the data (for example, you cannot check out a book to an unregistered user or check out a book that is not available)
+
+Technical limitations:
+- All classes with data (Author, Book, User, Status) must be immutable
+
+Addition:
+- Implement all findBooks functions as one function with default parameters
+- Add unit tests
+
+---
+
+### API
+
+---
+
+#### Data Classes
+
+```data class Book (val title: String, val author: Author, val genre: Genre, val year: Year)```
+
+```data class Author (val name: String)```
+
+```data class User (val name: String)```
+
+```data class Year (val year: Int)```
+
+---
+
+#### LibraryService
+
+```Library()``` - library constructor
+
+```findBooks(title: String? = null, author: Author? = null, year: Year? = null, genre: Genre? = null): List<Book>```
+
+***title: String?*** - book title
+
+***author: Author?*** - book author
+
+***year: Year?*** - year of publication of the book
+
+***genre: Genre?*** - book genre
+
+Search for a book by parameters. Searches only by the specified parameters - ignores the rest. Returns a list of found books
+
+
+```getAllBooks(): List<Book>``` - returns a list of all books
+
+```getAllAvailableBooks(): List<Book>``` - returns a list of all available books
+
+```getBookStatus(book: Book): Status?``` - returns the status of the book. *NULL* if the book is not found
+
+```getAllBookStatuses(): Map<Book, Status>``` - returns all books and their statuses
+
+```setBookStatus(book: Book, status: Status)``` - assigns the status to the book
+
+```addBook(book: Book, status: Status = Status.Available)``` - adds a book
+
+```registerUser(user: User): User?``` - registers a new user. returns NULL if user already exists or new User
+
+```unregisterUser(user: User): User?``` - removes the user from the database. returns NULL if user does not exist or User
+
+```takeBook(user: User, book: Book): Book?``` - give the user a book. NULL if the book was not issued or Book
+
+```returnBook(book: Book)``` - returns the book to the library
+
+---
+
+### Example
+
+```
+    val library: LibraryService = Library()
+
+    library.addBook(Book("Шерлок Холмс", Author("Конан Дойль"), Genre.DETECTIVE, Year(1892)), Status.Available)
+    library.addBook(Book("Шерлок Холмс", Author("Конан Дойль"), Genre.DETECTIVE, Year(1893)), Status.Available)
+    library.addBook(Book("Шерлок Холмс", Author("Конан Дойль"), Genre.DETECTIVE, Year(1903)), Status.Available)
+    library.addBook(Book("Человек", Author("Иоганн Ранке"), Genre.RELIGIOUS, Year(1903)), Status.Available)
+    library.addBook(Book("Автостопом по галактике", Author("Дуглас Адамс"), Genre.FANTASY, Year(1979)), Status.Available)
+    library.addBook(Book("Идиот", Author("Федор Достоевский"), Genre.NOVEL, Year(1868)), Status.Available)
+    library.addBook(Book("Библия", Author("Бог"), Genre.RELIGIOUS, Year(1228)), Status.Available)
+    library.addBook(Book("Чистый код", Author("Роберт Мартин"), Genre.TECHNICAL, Year(2008)), Status.Available)
+
+    val result: List<Book> = library.findBooks(genre = Genre.RELIGIOUS)
+
+    for (i in result)
+        println(i)
+```
