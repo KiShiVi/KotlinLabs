@@ -2,7 +2,7 @@
 
 ---
 
-##Table of contents
+## Table of contents
 
 0. [Description](#description)
 1. [Lab #1 - Aligning Text](#lab1)
