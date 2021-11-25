@@ -2,7 +2,18 @@
 
 ---
 
-## Description
+##Table of contents
+
+0. [Description](#description)
+1. [Lab #1 - Aligning Text](#lab1)
+2. [Lab #2 - Calculator](#lab2)
+3. [Lab #3 - Shape Factory](#lab3)
+4. [Lab #4 - Matrix](#lab4)
+5. [Lab #5 - LibraryService](#lab5)
+
+---
+
+## Description <a name = "description"></a>
 
 This repository is intended for laboratory work on the "Programming in Kotlin" discipline.
 
@@ -17,7 +28,7 @@ At the moment, 5 laboratory works are presented here:
 ---
 ---
 
-## Lab #1 - Aligning Text
+## Lab #1 - Aligning Text <a name = "lab1"></a>
 
 ---
 
@@ -42,7 +53,7 @@ Given multiline text and page width in characters. It is necessary to "implement
 
 ### API
 
-```
+```Kotlin
 fun alignText(
     text: String,
     lineWidth: Int = 120,
@@ -61,7 +72,7 @@ This method returns aligned text
 ---
 ---
 
-## Lab #2 - Calculator
+## Lab #2 - Calculator <a name = "lab2"></a>
 
 ---
 
@@ -111,7 +122,7 @@ Returns the result of an expression
 ---
 ---
 
-## Lab #3 - Shape Factory
+## Lab #3 - Shape Factory <a name = "lab3"></a>
 
 ---
 
@@ -188,7 +199,7 @@ All created shapes must be correct (for example, a square with a side of negativ
 ---
 #### Shapes
 
-```
+```Kotlin
 interface Shape {
     fun calcArea(): Double
     fun calcPerimeter(): Double
@@ -203,7 +214,7 @@ class Triangle(val a: Double, val b: Double, val c: Double) : Shape
 ---
 ---
 
-## Lab #4 - Matrix
+## Lab #4 - Matrix <a name = "lab4"></a>
 
 ---
 
@@ -274,7 +285,7 @@ The following operators are overloaded in the matrix:
 ---
 ### Example
 
-```
+```Kotlin
     val table = Array(2) { Array(3) { 0.0 } }
     table[0] = arrayOf(1.0, 2.0, 3.0)
     table[1] = arrayOf(4.0, 5.0, 6.0)
@@ -309,7 +320,7 @@ The following operators are overloaded in the matrix:
 ---
 ---
 
-## Lab #5 - LibraryService
+## Lab #5 - LibraryService <a name = "lab5"></a>
 
 ---
 
@@ -409,7 +420,7 @@ Search for a book by parameters. Searches only by the specified parameters - ign
 
 ### Example
 
-```
+```Kotlin
     val library: LibraryService = Library()
 
     library.addBook(Book("Шерлок Холмс", Author("Конан Дойль"), Genre.DETECTIVE, Year(1892)), Status.Available)
