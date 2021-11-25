@@ -117,7 +117,7 @@ Implement a simple calculator of algebraic expressions (e.g. based on the revers
 
 Returns the result of an expression
 
-***infixPhrase: String*** - input expression *(Exmaple: "((-4+3))\*8/4")*
+***infixPhrase: String*** - input expression *(Example: "((-4+3))\*8/4")*
 
 ---
 ---
