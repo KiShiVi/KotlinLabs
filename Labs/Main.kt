@@ -85,20 +85,20 @@ fun main() {
 //    println("A / 5.0\n")
 //    println("Matrix A:\n${(a/5.0).toString()}")
 //    println("A == C? ${a == c}\n")
-
-    val library: LibraryService = Library()
-
-    library.addBook(Book("Шерлок Холмс", Author("Конан Дойль"), Genre.DETECTIVE, Year(1892)), Status.Available)
-    library.addBook(Book("Шерлок Холмс", Author("Конан Дойль"), Genre.DETECTIVE, Year(1893)), Status.Available)
-    library.addBook(Book("Шерлок Холмс", Author("Конан Дойль"), Genre.DETECTIVE, Year(1903)), Status.Available)
-    library.addBook(Book("Человек", Author("Иоганн Ранке"), Genre.RELIGIOUS, Year(1903)), Status.Available)
-    library.addBook(Book("Автостопом по галактике", Author("Дуглас Адамс"), Genre.FANTASY, Year(1979)), Status.Available)
-    library.addBook(Book("Идиот", Author("Федор Достоевский"), Genre.NOVEL, Year(1868)), Status.Available)
-    library.addBook(Book("Библия", Author("Бог"), Genre.RELIGIOUS, Year(1228)), Status.Available)
-    library.addBook(Book("Чистый код", Author("Роберт Мартин"), Genre.TECHNICAL, Year(2008)), Status.Available)
-
-    val result: List<Book> = library.findBooks(genre = Genre.RELIGIOUS)
-
-    for (i in result)
-        println(i)
+//
+//    val library: LibraryService = Library()
+//
+//    library.addBook(Book("Шерлок Холмс", Author("Конан Дойль"), Genre.DETECTIVE, Year(1892)), Status.Available)
+//    library.addBook(Book("Шерлок Холмс", Author("Конан Дойль"), Genre.DETECTIVE, Year(1893)), Status.Available)
+//    library.addBook(Book("Шерлок Холмс", Author("Конан Дойль"), Genre.DETECTIVE, Year(1903)), Status.Available)
+//    library.addBook(Book("Человек", Author("Иоганн Ранке"), Genre.RELIGIOUS, Year(1903)), Status.Available)
+//    library.addBook(Book("Автостопом по галактике", Author("Дуглас Адамс"), Genre.FANTASY, Year(1979)), Status.Available)
+//    library.addBook(Book("Идиот", Author("Федор Достоевский"), Genre.NOVEL, Year(1868)), Status.Available)
+//    library.addBook(Book("Библия", Author("Бог"), Genre.RELIGIOUS, Year(1228)), Status.Available)
+//    library.addBook(Book("Чистый код", Author("Роберт Мартин"), Genre.TECHNICAL, Year(2008)), Status.Available)
+//
+//    val result: List<Book> = library.findBooks(genre = Genre.RELIGIOUS)
+//
+//    for (i in result)
+//        println(i)
 }
