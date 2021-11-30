@@ -5,11 +5,12 @@
 ## Table of contents
 
 0. [Description](#description)
-1. [Lab #1 - Aligning Text](#lab1)
+1. [Lab #1 - AligningText](#lab1)
 2. [Lab #2 - Calculator](#lab2)
-3. [Lab #3 - Shape Factory](#lab3)
+3. [Lab #3 - ShapeFactory](#lab3)
 4. [Lab #4 - Matrix](#lab4)
 5. [Lab #5 - LibraryService](#lab5)
+6. [Lab #6 - ShapeCollector](#lab6)
 
 ---
 
@@ -436,4 +437,95 @@ Search for a book by parameters. Searches only by the specified parameters - ign
 
     for (i in result)
         println(i)
+```
+
+
+## Lab #6 - ShapeCollector <a name = "lab6"></a>
+
+---
+
+### Task
+
+Using the code from work # 3, implement a ShapeCollector class to store shapes using Generics. Use the Shape interface as the upper bound for the type parameter.
+The class should provide the following methods:
+
+- ```add``` - adds a shape to the collector
+- ```addAll``` - adds a collection of shapes to the collector
+- ```getAll``` - Returns a list of all shapes that are stored in the collector
+- ```getAllSorted``` - Returns all the shapes that are stored in the collector, sorted using the Comparator passed to the method
+- ```getAllByClass``` - only returns the shapes of the class that is passed to this method as a parameter
+- Implement comparators to sort a list of shapes by area and by perimeter in ascending and descending order. Move the implemented comparators into a separate ShapeComparators object.
+- Implement comparators to sort circles by radius in ascending and descending order and put them in ShapeComparators.
+
+---
+
+### API
+
+---
+
+#### ShapeComparator
+
+```Kotlin
+object ShapeComparator {
+val perimeterComparator = compareBy<Shape> { it.calcPerimeter() }
+val perimeterComparatorDesc = compareByDescending<Shape> { it.calcPerimeter() }
+val areaComparator = compareBy<Shape> { it.calcArea() }
+val areaComparatorDesc = compareByDescending<Shape> { it.calcArea() }
+val radiusComparator = compareBy<Circle> { it.radius }
+val radiusComparatorDesc = compareByDescending<Circle> { it.radius }
+}
+```
+
+This object presents different types of ShapeCollector sorting
+
+---
+
+#### class ShapeCollector\<T : Shape\>
+
+```fun add(new: T)``` - adds a new shape to the collector
+
+```fun addAll(new: Collection<T>)``` - adds shapes from the collection to the collector
+
+```fun getAll(): List<T>``` - returns a list of all shapes in the collector
+
+```fun getAllSorted(comparator: Comparator<in T>): List<T>``` - returns a sorted list of all shapes in the collector
+
+```fun getAllByClass(shapeClass: Class<out T>): List<T>``` - only returns the shapes of the class that is passed to this method as a parameter
+
+---
+
+### Example
+
+```Kotlin
+val shapeFactory = ShapeFactorImpl()
+val shapeCollector = ShapeCollector<Shape>()
+val circleCollector = ShapeCollector<Circle>()
+
+shapeCollector.add(shapeFactory.createCircle(5.0))
+shapeCollector.add(shapeFactory.createSquare(6.0))
+shapeCollector.add(shapeFactory.createRectangle(4.0, 8.0))
+shapeCollector.add(shapeFactory.createTriangle(3.0, 4.0, 5.0))
+shapeCollector.add(shapeFactory.createRandomShape())
+
+circleCollector.add(shapeFactory.createCircle(5.0))
+circleCollector.add(shapeFactory.createCircle(4.0))
+circleCollector.add(shapeFactory.createCircle(10.0))
+
+//circleCollector.add(shapeFactory.createRectangle(4.0, 8.0)) !!! Will not compile
+
+for ( i in shapeCollector.getAllSorted(ShapeComparator.perimeterComparator))
+    println(i.toString() + " " + i.calcPerimeter())
+println("---------------------------")
+
+//    for ( i in shapeCollector.getAllSorted(ShapeComparator.radiusComparator)) !!! Will not compile
+//        println(i.toString() + " " + i.calcArea())
+//    println("---------------------------")
+
+for ( i in circleCollector.getAllSorted(ShapeComparator.radiusComparator))
+    println(i.toString() + " " + i.calcArea())
+println("---------------------------")
+
+for ( i in shapeCollector.getAllByClass(Square::class.java))
+    println(i.toString())
+}
 ```

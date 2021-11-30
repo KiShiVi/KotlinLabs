@@ -1,5 +1,3 @@
-import Lab5_LibraryService.*
-
 fun main() {
 //    val NotAlignedText: String = """Впервые более чем за 250 млн лет ящерицы смогли
 //        |восстановить идеальный хвост. Это получилось при помощи ученых из Университета
@@ -101,4 +99,36 @@ fun main() {
 //
 //    for (i in result)
 //        println(i)
+
+
+    val shapeFactory = ShapeFactorImpl()
+    val shapeCollector = ShapeCollector<Shape>()
+    val circleCollector = ShapeCollector<Circle>()
+
+    shapeCollector.add(shapeFactory.createCircle(5.0))
+    shapeCollector.add(shapeFactory.createSquare(6.0))
+    shapeCollector.add(shapeFactory.createRectangle(4.0, 8.0))
+    shapeCollector.add(shapeFactory.createTriangle(3.0, 4.0, 5.0))
+    shapeCollector.add(shapeFactory.createRandomShape())
+
+    circleCollector.add(shapeFactory.createCircle(5.0))
+    circleCollector.add(shapeFactory.createCircle(4.0))
+    circleCollector.add(shapeFactory.createCircle(10.0))
+
+    //circleCollector.add(shapeFactory.createRectangle(4.0, 8.0)) !!! Will not compile
+
+    for ( i in shapeCollector.getAllSorted(ShapeComparator.perimeterComparator))
+        println(i.toString() + " " + i.calcPerimeter())
+    println("---------------------------")
+
+//    for ( i in shapeCollector.getAllSorted(ShapeComparator.radiusComparator)) !!! Will not compile
+//        println(i.toString() + " " + i.calcArea())
+//    println("---------------------------")
+
+        for ( i in circleCollector.getAllSorted(ShapeComparator.radiusComparator))
+            println(i.toString() + " " + i.calcArea())
+        println("---------------------------")
+
+    for ( i in shapeCollector.getAllByClass(Square::class.java))
+        println(i.toString())
 }
