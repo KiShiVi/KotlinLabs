@@ -133,4 +133,20 @@ fun main() {
 //
 //    for ( i in shapeCollector.getAllByClass(Square::class.java))
 //        println(i.toString())
+
+    val path = "memory.json"
+    val shapeFactory = ShapeFactorImpl()
+    val sourceList = mutableListOf(
+        shapeFactory.createRandomTriangle(),
+        shapeFactory.createRandomCircle(),
+        shapeFactory.createRandomRectangle())
+    FileIO.fileWriter(ShapeSerializer.encode(sourceList), path)
+
+    val inList = ShapeSerializer.decode<MutableList<Shape>>(FileIO.fileReader(path))
+
+    println(ShapeSerializer.encode(sourceList) == ShapeSerializer.encode(inList))
+
+    inList.addAll(listOf(shapeFactory.createRandomShape(), shapeFactory.createRandomShape()))
+
+    FileIO.fileWriter(ShapeSerializer.encode(inList), path)
 }
