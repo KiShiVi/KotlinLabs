@@ -8,9 +8,6 @@ import java.io.File
 
 object ShapeSerializer {
     val json = Json {
-
-        prettyPrint = true
-
         serializersModule = SerializersModule {
             polymorphic(Shape::class) {
                 subclass(Circle::class)
