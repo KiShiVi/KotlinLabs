@@ -20,7 +20,7 @@ class ShapeCollector<T : Shape> {
     }
 
     fun getAll(): List<T> {
-        return allShapes
+        return allShapes.toList()
     }
 
     fun getAllSorted(comparator: Comparator<in T>): List<T> {
