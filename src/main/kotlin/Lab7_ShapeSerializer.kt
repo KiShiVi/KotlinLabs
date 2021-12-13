@@ -5,6 +5,8 @@ import kotlinx.serialization.modules.subclass
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import java.io.File
+import java.io.IOException
+import kotlin.jvm.Throws
 
 object ShapeSerializer {
     val json = Json {
@@ -23,6 +25,8 @@ object ShapeSerializer {
 }
 
 object FileIO {
+    @Throws (IOException::class)
     fun fileWriter(value: String, path: String) = File(path).writeText(value)
+    @Throws (IOException::class)
     fun fileReader(path: String): String = File(path).readText()
 }
